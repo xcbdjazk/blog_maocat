@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="aa"></div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script>
+   $(function () {
+    var ua = window.navigator.userAgent.toLowerCase();
+      //通过正则表达式匹配ua中是否含有MicroMessenger字符串
+      if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+          $("#aa").text("是")
+        alert("是")
+      }else{
+          $("#aa").text("不是")
+          alert("不是")
+      }
+    })
+    function isWeiXin(){
+      //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
+
+    }
+</script>
+</html>
