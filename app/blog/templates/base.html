@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{{url_for('static', filename = 'bootstrap/css/bootstrap.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename = 'css/layer.css')}}" rel="stylesheet">
+    {% block head%}{% endblock %}
+</head>
+
+<body>
+{% block body%}{% endblock %}
+
+</body>
+<script src="{{url_for('static',filename = 'js/jquery.min.js')}}"></script>
+<script src="{{url_for('static',filename = 'js/layer.js')}}"></script>
+<script src="{{url_for('static',filename = 'bootstrap/js/bootstrap.js')}}"></script>
+{% block script%}{% endblock%}
+</html>

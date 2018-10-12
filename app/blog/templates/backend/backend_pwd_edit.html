@@ -1,0 +1,4 @@
+{% extends 'utils/backend_base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block head%}<title>登录</title>{% endblock %}
+{% block body%}{{ wtf.quick_form(form) }}{% endblock %}

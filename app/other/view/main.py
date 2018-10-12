@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template as render
+from flask_login import login_user
+bp = Blueprint("main", __name__, url_prefix="/")
 
-bp = Blueprint("main", __name__, url_prefix="/other")
 
 @bp.route("")
 def index():
-    return render("index.html")
+    return render("backend_home.html")
