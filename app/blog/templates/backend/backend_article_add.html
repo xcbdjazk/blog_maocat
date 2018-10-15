@@ -1,0 +1,51 @@
+{% extends 'utils/backend_base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block head%}
+
+    <title>完整demo</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='ueditor/ueditor.config.js') }}"></script>
+    <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='ueditor/ueditor.all.min.js') }}"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='ueditor/lang/zh-cn/zh-cn.js') }}"></script>
+
+    <link href="{{ url_for('static', filename='ueditor/third-party/SyntaxHighlighter/shCoreDefault.css') }}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{{ url_for('static', filename='ueditor/third-party/SyntaxHighlighter/shCore.js') }}"></script>
+<script>
+SyntaxHighlighter.all();//执行代码高亮
+</script>
+
+    <style type="text/css">
+        div{
+            width:100%;
+        }
+    </style>
+{% endblock %}
+{% block body%}
+<div>
+
+    <h1>完整demo</h1>
+    <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
+</div>
+
+<script type="text/javascript">
+
+    var ue = UE.getEditor('editor', {
+		serverUrl: "/backend/upload"
+	});
+
+    function ajaxf() {
+            $.ajax({
+                url:"/home",
+                type:"post",
+                data:{"text":UE.getEditor('editor').getContent()},
+                success:function (da) {
+                    window.location.href=da;
+                }
+            })
+    }
+</script>
+    </div>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<{% endblock %}

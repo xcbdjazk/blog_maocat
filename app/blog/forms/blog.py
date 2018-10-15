@@ -25,3 +25,8 @@ class LoginForm(FlaskForm):
 class PWDForm(FlaskForm):
     pwd = PasswordField(u'密码', validators=[DataRequired()])
     submit = SubmitField(u'修改')
+
+
+class BlogTagForm(FlaskForm):
+    name = StringField(u'添加Tag', validators=[DataRequired()])
+    submit = SubmitField(u'添加')

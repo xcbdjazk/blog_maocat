@@ -4,15 +4,64 @@
     <meta charset="UTF-8">
     <link href="{{url_for('static', filename = 'bootstrap/css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename = 'css/layer.css')}}" rel="stylesheet">
+    <style>
+        #top{
+            width: 100%;
+            height: 50px;
+            background-color: #1E9FFF;
+            position: fixed;
+            top: 0;
+        }
+        #count{
+            width: 100%;
+            margin-top: 50px;
+        }
+        .dropdown{
+            float: right;
+            padding-left: 50px;
+        }
+    </style>
+    <script src="{{url_for('static',filename = 'js/jquery.min.js')}}"></script>
+<script src="{{url_for('static',filename = 'js/layer.js')}}"></script>
+<script src="{{url_for('static',filename = 'bootstrap/js/bootstrap.js')}}"></script>
+<script src="{{url_for('static',filename = 'js/backend.js')}}"></script>
     {% block head%}{% endblock %}
 </head>
 
 <body>
-{% block body%}{% endblock %}
+<div id="top">
 
+    <div class="dropdown">
+        <a href="">添加文章</a>
+        <button class="btn btn-default dropdown-toggle" type="button" id="11" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true">
+                {{admin.username}}
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a id="add_position" href="#">修改密码</a></li>
+            <li><a id="logout" href="#">退出登录</a></li>
+        </ul>
+    </div>
+</div>
+<div id="count">
+{% block body%}{% endblock %}
+</div>
 </body>
-<script src="{{url_for('static',filename = 'js/jquery.min.js')}}"></script>
-<script src="{{url_for('static',filename = 'js/layer.js')}}"></script>
-<script src="{{url_for('static',filename = 'bootstrap/js/bootstrap.js')}}"></script>
+
+<script>$('#add_position').on('click', function () {
+    layer.open({
+        type: 2,
+        title: '修改密码',
+        shade: 0.8,
+        area: ['60vw', '60vh'],
+        content: "{{url_for('backend.backend_pwd_edit')}}",
+
+        btn: ['确定']
+    });
+});
+$('#logout').on('click', function () {
+    window.location.href = "{{url_for('backend.backend_logout')}}";
+})</script>
 {% block script%}{% endblock%}
 </html>

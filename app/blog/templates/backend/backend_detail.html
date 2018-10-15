@@ -2,24 +2,12 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block head%}<title>详情</title>{% endblock %}
 {% block body%}
-<button class="btn btn-link" id="add_position"
-                            style="width: auto; padding-left: 0; padding-top: 4px;">
-                        修改密码
-    </button>
+
+
 {% endblock %}
 
 {% block script%}
     <script>
-        $('#add_position').on('click', function () {
-            layer.open({
-                type: 2,
-                title: '修改密码',
-                shade: 0.8,
-                area: ['60vw','60vh'],
-                content: "{{url_for('backend.backend_pwd_edit')}}" ,
 
-                btn: ['确定']
-            });
-        });
     </script>
 {% endblock %}

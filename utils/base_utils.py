@@ -9,5 +9,4 @@ def tmpl(*name_or_list, **context):
         template = [
             '/'.join(endpoint[x:]) + '.html' for x in range(len(endpoint))
             ]
-        print(template)
     return render_template(template, **context)
