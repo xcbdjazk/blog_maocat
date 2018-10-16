@@ -5,6 +5,7 @@ from ..forms.blog import LoginForm, PWDForm, BlogTagForm
 from models.user import Administrators
 from models.blog.blog import *
 from utils.base_utils import tmpl
+from config import config as cf
 import os
 import re
 import json
@@ -87,7 +88,7 @@ def upload():
     print(action)
     # 解析JSON格式的配置文件
     print("123321",bp.static_folder)
-    with open(os.path.join(bp.static_folder, 'ueditor', 'php',
+    with open(os.path.join(cf.base_dir,"app","blog","static", 'ueditor', 'php',
                            'config.json')) as fp:
         try:
             # 删除 `/**/` 之间的注释
@@ -125,7 +126,7 @@ def upload():
 
         if fieldName in request.files:
             field = request.files[fieldName]
-            uploader = Uploader(field, config, bp.static_folder)
+            uploader = Uploader(field, config, cf.base_dir+"/app"+"/blog"+"/static")
             result = uploader.getFileInfo()
         else:
             result['state'] = '上传接口出错'
@@ -141,7 +142,7 @@ def upload():
         }
         if fieldName in request.form:
             field = request.form[fieldName]
-            uploader = Uploader(field, config, bp.static_folder, 'base64')
+            uploader = Uploader(field, config, cf.base_dir+"/app"+"/blog"+"/static")
             result = uploader.getFileInfo()
         else:
             result['state'] = '上传接口出错'
@@ -164,7 +165,7 @@ def upload():
 
         _list = []
         for imgurl in source:
-            uploader = Uploader(imgurl, config, bp.static_folder, 'remote')
+            uploader = Uploader(imgurl, config, cf.base_dir+"/app"+"/blog"+"/static", 'remote')
             info = uploader.getFileInfo()
             _list.append({
                 'state': info['state'],
@@ -190,6 +191,7 @@ def upload():
     res = make_response(result)
     res.headers['Access-Control-Allow-Origin'] = '*'
     res.headers['Access-Control-Allow-Headers'] = 'X-Requested-With,X_Requested_With'
+    print(result)
     return res
 
 

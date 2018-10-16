@@ -2,7 +2,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block head%}
 
-    <title>完整demo</title>
+    <title>add article</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='ueditor/ueditor.config.js') }}"></script>
     <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='ueditor/ueditor.all.min.js') }}"> </script>
@@ -16,17 +16,11 @@
 SyntaxHighlighter.all();//执行代码高亮
 </script>
 
-    <style type="text/css">
-        div{
-            width:100%;
-        }
-    </style>
+
 {% endblock %}
 {% block body%}
 <div>
-
-    <h1>完整demo</h1>
-    <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
+    <script id="editor" type="text/plain" style="height: 500px;width: 95%"></script>
 </div>
 
 <script type="text/javascript">
@@ -46,6 +40,4 @@ SyntaxHighlighter.all();//执行代码高亮
             })
     }
 </script>
-    </div>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-<{% endblock %}
+{% endblock %}
