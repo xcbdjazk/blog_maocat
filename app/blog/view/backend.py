@@ -85,9 +85,7 @@ def upload():
     """
     result = {}
     action = request.args.get('action')
-    print(action)
     # 解析JSON格式的配置文件
-    print("123321",bp.static_folder)
     with open(os.path.join(cf.base_dir,"app","blog","static", 'ueditor', 'php',
                            'config.json')) as fp:
         try:
@@ -126,7 +124,7 @@ def upload():
 
         if fieldName in request.files:
             field = request.files[fieldName]
-            uploader = Uploader(field, config, cf.base_dir+"/app"+"/blog"+"/static")
+            uploader = Uploader(field, config, cf.base_dir+"/website_uploadfile")
             result = uploader.getFileInfo()
         else:
             result['state'] = '上传接口出错'
@@ -191,7 +189,6 @@ def upload():
     res = make_response(result)
     res.headers['Access-Control-Allow-Origin'] = '*'
     res.headers['Access-Control-Allow-Headers'] = 'X-Requested-With,X_Requested_With'
-    print(result)
     return res
 
 

@@ -149,6 +149,7 @@ class Uploader:
 
         # 检查路径是否存在，不存在则创建
         dirname = os.path.dirname(self.filePath)
+
         if not os.path.exists(dirname):
             try:
                 os.makedirs(dirname)
@@ -227,7 +228,7 @@ class Uploader:
         filename = re.sub(r'^/', '', self.fullName)
         return {
             'state': self.stateInfo,
-            'url': url_for('static', filename=filename, _external=True),
+            'url': "/website_uploadfile/" + filename,
             'title': self.oriName,
             'original': self.oriName,
             'type': self.fileType,
