@@ -5,7 +5,7 @@ __pycache__/
 .idea
 # C extensions
 *.so
-util/my.json
+utils/my.json
 # Distribution / packaging
 .Python
 build/
