@@ -5,6 +5,7 @@ from view import backend
 from config import *
 from flask_mongoengine import MongoEngineSessionInterface
 from models.user import Administrators
+from utils.register_admin_autoinit import register_endpoint
 
 
 def current_app():
@@ -18,7 +19,7 @@ def current_app():
     def load_user(userid):
         return Administrators.objects.get(id=userid)
     login_manager.init_app(app)
-
+    register_endpoint(app)
     app.register_blueprint(main.bp)
     app.register_blueprint(backend.bp)
     app.session_interface = MongoEngineSessionInterface(

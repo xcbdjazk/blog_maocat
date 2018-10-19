@@ -20,10 +20,16 @@ class TagBlog(mongo.DynamicDocument):
 class NavigationBlog(mongo.DynamicDocument):
     meta = {"collection": "navigation_blog"}
 
+    class STATUS:
+        show = 1
+        hide = 0
+
     alias_id = SequenceField()
     name = StringField(required=True)
     url = StringField()
     endpoint = StringField()
+    order = IntField(default=99)
+    status = IntField(default=STATUS.hide)
     father = ReferenceField("self")
 
     def all_children(self):
@@ -31,14 +37,15 @@ class NavigationBlog(mongo.DynamicDocument):
 
 
 class ArticleBlog(mongo.DynamicDocument):
-    meta = {"collection": "articleBlog_blog"}
+    meta = {"collection": "article_blog"}
+
     class STATUS:
         on = 1
         off = 0
 
-
     alias_id = SequenceField()
     title = StringField(required=True)
+    image_title = URLField()
     body = StringField(required=True)
     tags = ListField(ReferenceField(TagBlog))
     page_view = IntField(default=0)
@@ -48,4 +55,8 @@ class ArticleBlog(mongo.DynamicDocument):
 
     def page_view_incr(self):
         self.page_view += 1
+        self.save()
+
+    def edit_update_time(self):
+        self.update_time = datetime.datetime.now()
         self.save()
