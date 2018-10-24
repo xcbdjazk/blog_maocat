@@ -1,5 +1,5 @@
 # -*- coding:utf8 -*-
-from flask import Blueprint, redirect, session, url_for
+from flask import Blueprint, redirect, session, url_for,jsonify
 from flask_login import login_user, current_user, login_required,logout_user
 from ..forms.blog import LoginForm, PWDForm, BlogTagForm
 from models.user import Administrators
@@ -65,15 +65,58 @@ def backend_tag_add():
         tag = TagBlog()
         tag.name = form.name.data
         tag.save()
-        return "添加成功"
-    return tmpl("backend/backend_pwd_edit.html",form=form, admin=current_user)
+        return redirect(url_for("backend.backend_tag_list"))
+    return tmpl("utils/bash_form.html",form=form, admin=current_user)
+
+@bp.route("/tag/list", methods=["GET", "POST"])
+@login_required
+def backend_tag_list():
+    # form = BlogTagForm()
+    # if form.validate_on_submit():
+    tags = TagBlog.objects.all()
+
+    # return "添加成功"
+    return tmpl(tags=tags,admin=current_user)
+
+
+@bp.route("/add/tag/edit/<id>", methods=["GET", "POST"])
+@login_required
+def backend_tag_edit(id):
+    # form = BlogTagForm()
+    # if form.validate_on_submit():
+    tag = TagBlog.objects(id=id).first()
+    # a=[{"id":str(i.id),"text":i.name} for i in tag]
+    # return "添加成功"
+    form = BlogTagForm(tag=tag)
+    if form.validate_on_submit():
+        tag.name = form.name.data
+        tag.save()
+        tag.edit_update_time()
+        return redirect(url_for("backend.backend_tag_list"))
+    return tmpl("utils/bash_form.html",form=form, admin=current_user)
+
+
+@bp.route("/add/tag/ajax", methods=["GET", "POST"])
+@login_required
+def backend_tag_ajax():
+    # form = BlogTagForm()
+    # if form.validate_on_submit():
+    tag = TagBlog.objects.all()
+    a=[{"id":str(i.id),"text":i.name} for i in tag]
+    # return "添加成功"
+    return jsonify(a)
+
 
 
 @bp.route("/add/article", methods=["GET", "POST"])
 @login_required
 def backend_article_add():
+    if request.method == "GET":
+        return tmpl(admin=current_user)
+    else:
+        print(request.form.getlist("tags[]"))
+        return tmpl(admin=current_user)
 
-    return tmpl(admin=current_user)
 
 
 @bp.route('/upload', methods=['GET', 'POST', 'OPTIONS'])
@@ -124,7 +167,7 @@ def upload():
 
         if fieldName in request.files:
             field = request.files[fieldName]
-            uploader = Uploader(field, config, cf.base_dir+"/website_uploadfile")
+            uploader = Uploader(field, config, cf.base_dir+"/app/blog/static")
             result = uploader.getFileInfo()
         else:
             result['state'] = '上传接口出错'
@@ -190,9 +233,6 @@ def upload():
     res.headers['Access-Control-Allow-Origin'] = '*'
     res.headers['Access-Control-Allow-Headers'] = 'X-Requested-With,X_Requested_With'
     return res
-
-
-
 
 
 

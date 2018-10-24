@@ -50,6 +50,7 @@ class Uploader:
         self.config = config
         self.static_folder = static_folder
         self._type = _type
+
         if _type == 'base64':
             self.upBase64()
         elif _type == 'remote':
@@ -116,6 +117,7 @@ class Uploader:
 
         # 检查路径是否存在，不存在则创建
         dirname = os.path.dirname(self.filePath)
+        print(self.filePath)
         if not os.path.exists(dirname):
             try:
                 os.makedirs(dirname)
@@ -149,7 +151,7 @@ class Uploader:
 
         # 检查路径是否存在，不存在则创建
         dirname = os.path.dirname(self.filePath)
-
+        print(self.filePath)
         if not os.path.exists(dirname):
             try:
                 os.makedirs(dirname)
@@ -186,6 +188,7 @@ class Uploader:
         filePath = ''
         for path in self.fullName.split('/'):
             filePath = os.path.join(filePath, path)
+        print(os.path.join(rootPath, filePath))
         return os.path.join(rootPath, filePath)
 
     def getFileExt(self):
@@ -226,9 +229,10 @@ class Uploader:
     def getFileInfo(self):
         # 获取当前上传成功文件的各项信息
         filename = re.sub(r'^/', '', self.fullName)
+        print(filename)
         return {
             'state': self.stateInfo,
-            'url': "/website_uploadfile/" + filename,
+            'url':"/static/"+ filename,
             'title': self.oriName,
             'original': self.oriName,
             'type': self.fileType,

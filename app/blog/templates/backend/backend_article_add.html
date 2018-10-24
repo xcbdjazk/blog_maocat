@@ -11,6 +11,8 @@
     <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='ueditor/lang/zh-cn/zh-cn.js') }}"></script>
 
     <link href="{{ url_for('static', filename='ueditor/third-party/SyntaxHighlighter/shCoreDefault.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='select2/css/select2-bootstrap.css') }}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="{{ url_for('static', filename='ueditor/third-party/SyntaxHighlighter/shCore.js') }}"></script>
 <script>
 SyntaxHighlighter.all();//执行代码高亮
@@ -19,8 +21,16 @@ SyntaxHighlighter.all();//执行代码高亮
 
 {% endblock %}
 {% block body%}
+<div style="width: 80%;margin: auto">
+    <strong>title:</strong><input type="text" id="title">
+    <script id="editor" type="text/plain" ><h1>123321</h1></script>
+    <strong>tag:</strong>
+        <select id="tags" style="width: 500px" multiple>
+        </select>
+    <a id="add_tag">add tag</a>
 <div>
-    <script id="editor" type="text/plain" style="height: 500px;width: 95%"></script>
+    <button class="btn" onclick="ajaxf()">提交</button>
+</div>
 </div>
 
 <script type="text/javascript">
@@ -30,14 +40,64 @@ SyntaxHighlighter.all();//执行代码高亮
 	});
 
     function ajaxf() {
+        {#console.log($("#aaa").val())#}
+        var title = $("#title").val()
+        var tags = $("#tags").val()
+        var text = UE.getEditor('editor').getContent()
+        if(title == ""){
+            layer.msg("title 不能为空")
+            return false
+        }
+        if(tags.length == 0){
+            layer.msg("tags 不能为空")
+            return false
+        }
+        if(text.length == 0){
+            layer.msg("tags 不能为空")
+            return false
+        }
             $.ajax({
-                url:"/home",
+                url:"{{ url_for('backend.backend_article_add') }}",
                 type:"post",
-                data:{"text":UE.getEditor('editor').getContent()},
+                data:{"title":title, "text":text,"tags":tags},
                 success:function (da) {
-                    window.location.href=da;
+                    {#window.location.href=da;#}
                 }
-            })
+             })
     }
 </script>
+    <script src="{{ url_for('static',filename='select2/js/select2.full.js') }}"></script>
+    <script>
+
+     $("#tags").select2({
+	 //data: data,
+	placeholder:'请选择',//默认文字提示
+	{#tags: true,//允许手动添加#}
+    allowClear: true,//允许清空
+	ajax: {
+		url: '{{ url_for('backend.backend_tag_ajax') }}',
+		type:'GET',
+		dataType: 'json',
+		data: function(){ return {'projectId':$('#projectSel').val()}},
+		processResults: function (data) {
+			 return {
+				        results: data
+				 };
+		 }
+		}
+})
+</script>
+    <script>
+    $('#add_tag').on('click', function () {
+    layer.open({
+        type: 2,
+        title: '修改密码',
+        shade: 0.8,
+        area: ['80vw', '60vh'],
+        content: "{{url_for('backend.backend_tag_list')}}",
+
+        btn: ['确定']
+    });
+});
+    </script>
 {% endblock %}

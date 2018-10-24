@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField, BooleanField
 from wtforms.validators import ValidationError, DataRequired, Length
 from models.user import Administrators
+from flask import request
 
 __all__ = ["LoginForm"]
 
@@ -30,3 +31,10 @@ class PWDForm(FlaskForm):
 class BlogTagForm(FlaskForm):
     name = StringField(u'添加Tag', validators=[DataRequired()])
     submit = SubmitField(u'添加')
+
+
+    def __init__(self,*args,**kwargs):
+        super(BlogTagForm, self).__init__(*args,**kwargs)
+        if request.method == "GET":
+            if kwargs:
+                self.name.data = kwargs.get("tag").name

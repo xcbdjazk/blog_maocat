@@ -1,0 +1,25 @@
+{% extends 'utils/backend_base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block head%}
+<title>登录</title>
+<style>
+    #top{display: none}
+</style>
+{% endblock %}
+{% block body%}
+    <a href="{{ url_for("backend.backend_tag_add") }}">add tag</a>
+    <table class="table">
+    {% for foo in tags %}
+        <tr>
+            <td>
+                {{ foo.name }}
+            </td>
+            <td>
+                <a href="{{ url_for('backend.backend_tag_edit', id =foo.id) }}"> 编辑</a>
+            </td>
+        </tr>
+
+    {% endfor %}
+    </table>
+
+{% endblock %}
