@@ -1,0 +1,21 @@
+{% extends 'utils/backend_base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block head %}
+
+    <title>article</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link href="{{ url_for('static', filename='ueditor/third-party/SyntaxHighlighter/shCoreDefault.css') }}"
+          rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='ueditor/third-party/SyntaxHighlighter/shCore.js') }}"></script>
+    <script>
+        SyntaxHighlighter.all();//执行代码高亮
+    </script>
+{% endblock %}
+{% block body %}
+    <div style="width: 80%;margin: auto">
+        <h1>{{ article.title }}</h1>
+    {{ article.body|safe }}
+    </div>
+{% endblock %}

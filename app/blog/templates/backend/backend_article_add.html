@@ -17,13 +17,11 @@
 <script>
 SyntaxHighlighter.all();//执行代码高亮
 </script>
-
-
 {% endblock %}
 {% block body%}
 <div style="width: 80%;margin: auto">
     <strong>title:</strong><input type="text" id="title">
-    <script id="editor" type="text/plain" ><h1>123321</h1></script>
+    <script id="editor" type="text/plain" ></script>
     <strong>tag:</strong>
         <select id="tags" style="width: 500px" multiple>
         </select>
@@ -61,10 +59,11 @@ SyntaxHighlighter.all();//执行代码高亮
                 type:"post",
                 data:{"title":title, "text":text,"tags":tags},
                 success:function (da) {
-                    {#window.location.href=da;#}
+                    window.location.href=da;
                 }
              })
     }
+
 </script>
     <script src="{{ url_for('static',filename='select2/js/select2.full.js') }}"></script>
     <script>
@@ -86,6 +85,7 @@ SyntaxHighlighter.all();//执行代码高亮
 		 }
 		}
 })
+
 </script>
     <script>
     $('#add_tag').on('click', function () {
@@ -95,7 +95,6 @@ SyntaxHighlighter.all();//执行代码高亮
         shade: 0.8,
         area: ['80vw', '60vh'],
         content: "{{url_for('backend.backend_tag_list')}}",
-
         btn: ['确定']
     });
 });

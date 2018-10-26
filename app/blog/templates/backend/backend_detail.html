@@ -1,13 +1,90 @@
 {% extends 'utils/backend_base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block head%}<title>详情</title>{% endblock %}
-{% block body%}
+{% block head %}<title>详情</title>
+    <link href="{{ url_for('static', filename='select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ url_for('static', filename='select2/css/select2-bootstrap.css') }}" rel="stylesheet"
+          type="text/css"/>{% endblock %}
+{% block body %}
+    <div style="width: 80%;margin: auto">
+        <form method="get">
+            关键词:<input name="key">
+            tag:<select id="tags" name="tag" style="width: 200px">
+                </select>
+                <button class="btn" type="submit">搜索</button>
 
+        </form>
+        order_by:<a href="{{ url_for('backend.backend_detail',key=request.args.get("key",""),tag=request.args.get("tag",""),order=create_time)}}">
+                    <button class="btn" >时间</button>
+                 </a>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td>title</td>
+                <td>tags</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for article in articles %}
+
+                {% if article.status == 0  %}
+                    <tr  style="background-color:red;">
+                {% else %}
+                    <tr  style="background-color:#7FFFD4;">
+                {% endif %}
+
+            <td><a href="{{ url_for('backend.backend_article_detail', id=article.id) }}">{{ article.title }}</a></td>
+                    <td>
+                        {% for tag in article.tags %}
+                            {{ tag.name }}/
+                        {% endfor %}
+                    </td>
+                    <td><a href="{{ url_for('backend.backend_article_status', id=article.id) }}">
+                        {% if article.status == 0  %}
+                            显示
+                        {% else %}
+                            隐藏
+                        {% endif %}
+                        </a>
+                        <a href="{{ url_for('backend.backend_article_edit',id=article.id) }}">编辑</a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
 
 {% endblock %}
 
-{% block script%}
+{% block script %}
     <script>
 
     </script>
+    <script src="{{ url_for('static',filename='select2/js/select2.full.js') }}"></script>
+    <script>
+
+        $("#tags").select2({
+            //data: data,
+
+            ajax: {
+                url: '{{ url_for('backend.backend_tag_ajax') }}',
+                type: 'GET',
+                dataType: 'json',
+                {#data: function () {#}
+                {#    return {'projectId': $('#projectSel').val()}#}
+                {# },#}
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }
+        })
+
+    </script>
+
 {% endblock %}
