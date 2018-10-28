@@ -1,6 +1,6 @@
 # -*- coding:utf8 -*-
-from flask import Blueprint, redirect, session, url_for,jsonify
-from flask_login import login_user, current_user, login_required,logout_user
+from flask import Blueprint, redirect, session, url_for, jsonify
+from flask_login import login_user, current_user, login_required, logout_user
 from ..forms.blog import LoginForm, PWDForm, BlogTagForm
 from models.user import Administrators
 from models.blog.blog import *
@@ -35,6 +35,8 @@ def backend_home():
 @bp.route("/detail", methods=["GET"])
 @login_required
 def backend_detail():
+    ip = request.remote_addr
+    print ip
     key = request.args.get("key", "")
     tag = request.args.get("tag", "")
     create_time = request.args.get("order", "-create_time")
@@ -47,14 +49,11 @@ def backend_detail():
     if tag:
         query["tag"] = tag
     articles = ArticleBlog.objects(**query).order_by(create_time).all()
-    if create_time =="create_time":
-        create_time ="-create_time"
+    if create_time == "create_time":
+        create_time = "-create_time"
     else:
         create_time = "create_time"
-    return tmpl(admin=current_user,articles=articles,create_time=create_time)
-
-
-
+    return tmpl(admin=current_user, articles=articles, create_time=create_time)
 
 
 @bp.route("/logout", methods=["GET"])
@@ -85,9 +84,7 @@ def backend_tag_add():
         tag.name = form.name.data
         tag.save()
         return redirect(url_for("backend.backend_tag_list"))
-    return tmpl("utils/bash_form.html",form=form, admin=current_user)
-
-
+    return tmpl("utils/bash_form.html", form=form, admin=current_user)
 
 
 @bp.route("/tag/list", methods=["GET", "POST"])
@@ -98,7 +95,7 @@ def backend_tag_list():
     tags = TagBlog.objects.all()
 
     # return "添加成功"
-    return tmpl(tags=tags,admin=current_user)
+    return tmpl(tags=tags, admin=current_user)
 
 
 @bp.route("/add/tag/edit/<id>", methods=["GET", "POST"])
@@ -115,7 +112,7 @@ def backend_tag_edit(id):
         tag.save()
         tag.edit_update_time()
         return redirect(url_for("backend.backend_tag_list"))
-    return tmpl("utils/bash_form.html",form=form, admin=current_user)
+    return tmpl("utils/bash_form.html", form=form, admin=current_user)
 
 
 @bp.route("/add/tag/ajax", methods=["GET", "POST"])
@@ -124,7 +121,7 @@ def backend_tag_ajax():
     # form = BlogTagForm()
     # if form.validate_on_submit():
     tag = TagBlog.objects.all()
-    a=[{"id":str(i.id),"text":i.name} for i in tag]
+    a = [{"id": str(i.id), "text": i.name} for i in tag]
     # return "添加成功"
     return jsonify(a)
 
@@ -153,7 +150,7 @@ def backend_article_edit(id):
     article = ArticleBlog.objects(id=id).first()
     if request.method == "GET":
         tags = TagBlog.objects.all()
-        return tmpl(admin=current_user,article=article,tags=tags)
+        return tmpl(admin=current_user, article=article, tags=tags)
     else:
         article.title = request.form['title']
         article.body = request.form['text']
@@ -182,8 +179,7 @@ def backend_article_status(id):
 @login_required
 def backend_article_detail(id):
     article = ArticleBlog.objects(id=id).first()
-    return tmpl(article=article,admin=current_user)
-
+    return tmpl(article=article, admin=current_user)
 
 
 @bp.route('/upload', methods=['GET', 'POST', 'OPTIONS'])
@@ -196,7 +192,7 @@ def upload():
     result = {}
     action = request.args.get('action')
     # 解析JSON格式的配置文件
-    with open(os.path.join(cf.base_dir,"app","blog","static", 'ueditor', 'php',
+    with open(os.path.join(cf.base_dir, "app", "blog", "static", 'ueditor', 'php',
                            'config.json')) as fp:
         try:
             # 删除 `/**/` 之间的注释
@@ -234,7 +230,7 @@ def upload():
 
         if fieldName in request.files:
             field = request.files[fieldName]
-            uploader = Uploader(field, config, cf.base_dir+"/app/blog/static")
+            uploader = Uploader(field, config, cf.base_dir + "/app/blog/static")
             result = uploader.getFileInfo()
         else:
             result['state'] = '上传接口出错'
@@ -250,7 +246,7 @@ def upload():
         }
         if fieldName in request.form:
             field = request.form[fieldName]
-            uploader = Uploader(field, config, cf.base_dir+"/app"+"/blog"+"/static")
+            uploader = Uploader(field, config, cf.base_dir + "/app" + "/blog" + "/static")
             result = uploader.getFileInfo()
         else:
             result['state'] = '上传接口出错'
@@ -273,7 +269,7 @@ def upload():
 
         _list = []
         for imgurl in source:
-            uploader = Uploader(imgurl, config, cf.base_dir+"/app"+"/blog"+"/static", 'remote')
+            uploader = Uploader(imgurl, config, cf.base_dir + "/app" + "/blog" + "/static", 'remote')
             info = uploader.getFileInfo()
             _list.append({
                 'state': info['state'],
@@ -300,7 +296,3 @@ def upload():
     res.headers['Access-Control-Allow-Origin'] = '*'
     res.headers['Access-Control-Allow-Headers'] = 'X-Requested-With,X_Requested_With'
     return res
-
-
-
-
