@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{{url_for('static', filename = 'bootstrap/css/bootstrap.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename = 'css/layer.css')}}" rel="stylesheet">
+    <style>
+        #top{
+            width: 100%;
+            height: 50px;
+            background-color: white;
+            position: fixed;
+            top: 0;
+            border-bottom: black 1px solid;
+        }
+        #content{
+            width: 80%;
+            margin-top: 60px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .dropdown{
+            float: right;
+            padding-left: 50px;
+        }
+    </style>
+    <script src="{{url_for('static',filename = 'js/jquery.min.js')}}"></script>
+<script src="{{url_for('static',filename = 'js/layer.js')}}"></script>
+<script src="{{url_for('static',filename = 'bootstrap/js/bootstrap.js')}}"></script>
+<script src="{{url_for('static',filename = 'js/backend.js')}}"></script>
+    {% block head%}{% endblock %}
+</head>
+
+<body>
+<div id="body">
+<div id="top">
+
+    <div class="dropdown">
+
+    </div>
+</div>
+<div id="content">
+{% block body%}{% endblock %}
+</div>
+</div>
+</body>
+
+
+{% block script%}{% endblock%}
+</html>
