@@ -1,5 +1,5 @@
 # -*- coding:utf8 -*-
-from flask import Blueprint, redirect, session, url_for, jsonify
+from flask import Blueprint, redirect, url_for, jsonify,request,make_response
 from flask_login import login_user, current_user, login_required, logout_user
 from ..forms.blog import LoginForm, PWDForm, BlogTagForm
 from models.user import Administrators
@@ -9,11 +9,7 @@ from config import config as cf
 import os
 import re
 import json
-import os
-import re
-import json
 
-from flask import Flask, request, render_template, url_for, make_response
 
 from utils.uploader import Uploader
 
@@ -35,12 +31,9 @@ def backend_home():
 @bp.route("/detail", methods=["GET"])
 @login_required
 def backend_detail():
-    ip = request.remote_addr
-    print ip
     key = request.args.get("key", "")
     tag = request.args.get("tag", "")
     create_time = request.args.get("order", "-create_time")
-    print(create_time)
     query = {}
     if key:
         titles = ArticleBlog.objects(title__icontains=key).all()

@@ -2,14 +2,14 @@ from app import blog
 from app import other
 from flask_script import Manager, Server,Shell
 from script.command import SubServer
-from script.other import CreateAdministrators
+from script.admin import CreateAdministrators
 blog_app = blog.current_app()
 blog_manager = Manager(blog_app)
-blog_manager.add_command("runserver", SubServer(blog_app, host="0.0.0.0",port=5001) )
+blog_manager.add_command("runserver", SubServer(blog_app, host="0.0.0.0",port=5001))
 
 blog_other = other.current_app()
 other_manager = Manager(blog_other)
-other_manager.add_command("runserver", SubServer(blog_other, host="0.0.0.0",port=5002) )
+other_manager.add_command("runserver", SubServer(blog_other, host="0.0.0.0",port=5002))
 
 app = blog.current_app()
 
