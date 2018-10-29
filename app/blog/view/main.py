@@ -2,12 +2,13 @@
 from flask import Blueprint, send_from_directory,redirect, url_for
 from utils.base_utils import tmpl
 from config import config
-
+import os
 bp = Blueprint("main", __name__, url_prefix="/")
 
 
 @bp.route("")
 def index():
+
     return redirect(url_for('blog.index'))
 
 
