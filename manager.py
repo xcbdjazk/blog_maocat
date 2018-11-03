@@ -3,6 +3,7 @@ from app import other
 from flask_script import Manager, Server,Shell
 from script.command import SubServer
 from script.admin import CreateAdministrators
+from script.admin import admin_manager
 blog_app = blog.current_app()
 blog_manager = Manager(blog_app)
 blog_manager.add_command("runserver", SubServer(blog_app, host="0.0.0.0",port=5001))
@@ -21,6 +22,7 @@ def make_shell_context():
 manager = Manager(app)
 manager.add_command("blog", blog_manager)
 manager.add_command("createadmin", CreateAdministrators())
+manager.add_command("create", admin_manager)
 manager.add_command("other", other_manager)
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command("runserver", Server(host='0.0.0.0'))
