@@ -18,29 +18,31 @@ class CreateAdministrators(Command):
         else:
             admin = Administrators(username="admin", mobile="17802927387")
             admin.is_super = True
-            with open(os.path.join(config.base_dir, "utils", "my.json"), "r",) as f:
+            with open(os.path.join(config.base_dir, "utils", "my.json"), "r", ) as f:
                 pwd = json.load(f)[0]
                 print("----pwd:", pwd, "-----")
                 admin.password = pwd
             admin.save()
 
 
-@admin_manager.option("-u","--username",dest="username")
-@admin_manager.option("-m","--mobile",dest="mobile")
-@admin_manager.option("-p","--password",dest="password")
-def admin(username,mobile,password):
-    if len(username) <5 or len(mobile) !=11 or len(password)<6:
+@admin_manager.option("-u", "--username", dest="username")
+@admin_manager.option("-m", "--mobile", dest="mobile")
+@admin_manager.option("-p", "--password", dest="password")
+def admin(username, mobile, password):
+    if len(username) < 5 or len(mobile) != 11 or len(password) < 6:
         print "error :you param  wrong;"
-        print "username : len gt 5"
+        print "username : len gte 5"
         print "mobile : len is 11"
-        print "password : len gt 6"
+        print "password : len gte 6"
 
     else:
         admin = Administrators.objects(username=username, mobile=mobile).first()
         if admin:
             admin.password = password
+            message = "update admin Success \nusername:{}\nmobile:{}".format(username, mobile)
         else:
-            admin = Administrators(username=username, mobile=mobile,password = password)
+            admin = Administrators(username=username, mobile=mobile, password=password)
+            message = "create admin Success \nusername:{}\nmobile:{}".format(username, mobile)
 
         admin.save()
-        print "create admin Success"
+        print message

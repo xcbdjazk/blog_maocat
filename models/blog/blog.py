@@ -21,8 +21,8 @@ class NavigationBlog(mongo.DynamicDocument):
     meta = {"collection": "navigation_blog"}
 
     class STATUS:
-        show = 1
         hide = 0
+        show = 1
 
     alias_id = SequenceField()
     name = StringField(required=True)

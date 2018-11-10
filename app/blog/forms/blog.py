@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField, BooleanField
-from wtforms.validators import ValidationError, DataRequired, Length
+from wtforms.validators import ValidationError, DataRequired, Length,Email
 from models.user import Administrators
 from flask import request
 
@@ -21,6 +21,37 @@ class LoginForm(FlaskForm):
             raise ValidationError(u'账号或者密码错误')
         elif user.verify_password(field.data) is False:
             raise ValidationError(u'账号或者密码错误')
+
+
+class EmailForm(FlaskForm):
+    email = StringField(u'E-mail', validators=[DataRequired(),
+                                           Email(message=u'邮箱格式不正确')])
+    code = PasswordField(u'验证码', validators=[DataRequired()])
+    remember_me = BooleanField(u'下次自动登录')
+    submit = SubmitField(u'登录')
+
+    def validate_code(self, field):
+        user = Administrators.objects(mobile=self.email.data).first()
+        if user is None:
+            raise ValidationError(u'账号或者密码错误')
+        elif user.verify_code(field.data) is False:
+            raise ValidationError(u'账号或者密码错误')
+
+
+class EmailForm(FlaskForm):
+    mobile = StringField(u'E-mail', validators=[DataRequired(),
+                                           Email(message=u'邮箱格式不正确')])
+    code = PasswordField(u'验证码', validators=[DataRequired()])
+    remember_me = BooleanField(u'下次自动登录')
+    submit = SubmitField(u'登录')
+
+    def validate_code(self, field):
+        user = Administrators.objects(mobile=self.email.data).first()
+        if user is None:
+            raise ValidationError(u'账号或者密码错误')
+        elif user.verify_code(field.data) is False:
+            raise ValidationError(u'账号或者密码错误')
+
 
 
 class PWDForm(FlaskForm):

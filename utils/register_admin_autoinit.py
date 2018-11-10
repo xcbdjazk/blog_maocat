@@ -1,11 +1,16 @@
 # -*- coding:utf8 -*-
 from config import config
 from models.blog.blog import *
+from models.user import LoginPattern
 
 
 def register_endpoint(app):
     @app.before_first_request
     def update_action_url():
+        login_patt = LoginPattern() #导入登录方式
+        login_patt.save()
+        print(login_patt)
+        print("123")
         endpoints = app.url_map.iter_rules()
         navigations = NavigationBlog.objects.all()
         nav_end = [nav.endpoint for nav in navigations]

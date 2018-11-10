@@ -21,10 +21,10 @@ def current_app():
         return Administrators.objects.get(id=userid)
 
     login_manager.init_app(app)
-    register_endpoint(app)
     app.register_blueprint(main.bp)
     app.register_blueprint(blog.bp)
     app.register_blueprint(backend.bp)
+    register_endpoint(app)
     app.session_interface = MongoEngineSessionInterface(
         mongo, collection='blog_session')
     return app
