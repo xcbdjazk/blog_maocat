@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon"  href="{{url_for('static', filename = 'favicon.ico')}}" type="image/x-icon"/>
+    <link rel="icon" href="{{url_for('static', filename = 'favicon.ico')}}" type="image/x-icon"/>
     <link href="{{url_for('static', filename = 'bootstrap/css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename = 'css/layer.css')}}" rel="stylesheet">
     <style>
@@ -23,20 +25,46 @@
             float: right;
             padding-left: 50px;
         }
+
     </style>
     <script src="{{url_for('static',filename = 'js/jquery.min.js')}}"></script>
-<script src="{{url_for('static',filename = 'js/layer.js')}}"></script>
-<script src="{{url_for('static',filename = 'bootstrap/js/bootstrap.js')}}"></script>
-<script src="{{url_for('static',filename = 'js/backend.js')}}"></script>
+    <script src="{{url_for('static',filename = 'js/layer.js')}}"></script>
+    <script src="{{url_for('static',filename = 'bootstrap/js/bootstrap.js')}}"></script>
+    <script src="{{url_for('static',filename = 'js/backend.js')}}"></script>
     {% block head%}{% endblock %}
 </head>
 
 <body>
 <div id="body">
 <div id="top">
-    <span class="glyphicon glyphicon-search" ></span>
+<nav class="navbar navbar-default">
+  <div class="container-fluid ">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header col-sm-2">
+      <a class="navbar-brand" href="#">MaoCat</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="navbar-collapse col-sm-6" id="bs-example-navbar-collapse-1">
+{#      <ul class="nav navbar-nav">#}
+{#        <li><a href="#">Home</a></li>#}
+{#      </ul>#}
+        <a class="navbar-brand" href="#">MaoCat</a>
+        <a class="navbar-brand" href="#">MaoCat</a>
+    </div>
+    <div class="col-sm-3">
+      <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Search</button>
+      </form>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 </div>
 <div id="content">
+123
 {% block body%}{% endblock %}
 </div>
 </div>

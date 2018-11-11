@@ -15,6 +15,7 @@ def current_app():
 
     mongo.init_app(app)
     bootstrap.init_app(app)
+    mail.init_app(app)
 
     @login_manager.user_loader
     def load_user(userid):

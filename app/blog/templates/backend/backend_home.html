@@ -4,5 +4,27 @@
 <title>登录</title>
 <style>
     #top{display: none}
+    #login{
+        width: 40%;
+        margin: auto;
+    }
 </style>{% endblock %}
-{% block body%}{{ wtf.quick_form(form) }}{% endblock %}
+
+    {% block body%}<div id="login"><a class="btn btn-default" id="send_code">send code</a> {{ wtf.quick_form(form) }} </div>
+{% endblock %}
+{% block script %}
+    <script>
+    $("#send_code").click(function () {
+        var email = $("#email").val()
+        $.ajax({
+            url:"{{ url_for("backend.send_mail_code") }}",
+            type:"POST",
+            data:{"email":email},
+            success:function (da) {
+                layer.msg(da.message)
+            }
+
+        })
+    })
+    </script>
+{% endblock %}

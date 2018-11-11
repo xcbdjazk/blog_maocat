@@ -28,7 +28,7 @@ class Administrators(UserMixin, mongo.DynamicDocument):
     create_time = DateTimeField(default=datetime.datetime.now())
     update_time = DateTimeField(default=datetime.datetime.now())
     code = StringField()
-    code_over_time = DateTimeField()
+    code_over_time = DateTimeField(default=datetime.datetime.now())
     is_super = BooleanField(default=False)
 
     @property

@@ -7,10 +7,10 @@ from models.user import LoginPattern
 def register_endpoint(app):
     @app.before_first_request
     def update_action_url():
-        login_patt = LoginPattern() #导入登录方式
-        login_patt.save()
-        print(login_patt)
-        print("123")
+        login_patt = LoginPattern.objects.first()
+        if not login_patt:
+            login_patt = LoginPattern() #导入登录方式
+            login_patt.save()
         endpoints = app.url_map.iter_rules()
         navigations = NavigationBlog.objects.all()
         nav_end = [nav.endpoint for nav in navigations]

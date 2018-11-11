@@ -1,15 +1,16 @@
 # -*- coding:utf8 -*-
 from flask import Blueprint, redirect, url_for, jsonify,request,make_response
 from flask_login import login_user, current_user, login_required, logout_user
-from ..forms.blog import LoginForm, PWDForm, BlogTagForm
-from models.user import Administrators
+from ..forms.blog import LoginForm, PWDForm, BlogTagForm,EmailForm,MobileForm
+from models.user import Administrators,LoginPattern
 from models.blog.blog import *
 from utils.base_utils import tmpl
+from utils.send import send_mail
 from config import config as cf
 import os
 import re
 import json
-
+from utils import json_message
 
 from utils.uploader import Uploader
 
@@ -18,14 +19,39 @@ bp = Blueprint("backend", __name__, url_prefix="/backend")
 
 @bp.route("", methods=["GET", "POST"])
 def backend_home():
+
     if current_user.is_authenticated:
         return redirect(url_for("backend.backend_detail"))
-    form = LoginForm()
-    admin = Administrators.objects(mobile=form.mobile.data).first()
+    login_pattern = LoginPattern.objects.first()
+    if login_pattern.login_pattern == LoginPattern.TYPE.email:
+        form = EmailForm()
+    elif login_pattern.login_pattern == LoginPattern.TYPE.mobile:
+        form = MobileForm()
+    else:
+        form = LoginForm()
+    admin =None
     if form.validate_on_submit():
+        if login_pattern.login_pattern == LoginPattern.TYPE.email:
+            admin = Administrators.objects(email=form.email.data).first()
+        elif login_pattern.login_pattern == LoginPattern.TYPE.mobile:
+            admin = Administrators.objects(mobile=form.mobile.data).first()
+        else:
+            admin = Administrators.objects(mobile=form.mobile.data).first()
         login_user(admin, form.remember_me.data)
         return redirect(url_for("backend.backend_detail"))
-    return tmpl(form=form, admin=admin)
+    return tmpl(form=form, admin=admin, login_pattern=login_pattern)
+
+
+@bp.route("/send/mail/code", methods=["POST"])
+def send_mail_code():
+    # send_mail()
+    email = request.form.get("email")
+    user = Administrators.objects(email=email).first()
+    if not user:
+        return json_message.params_error(message="邮箱不正确")
+    code = user.set_code()
+    send_mail([email], body=code)
+    return json_message.success(message="邮箱验证码发送成功")
 
 
 @bp.route("/detail", methods=["GET"])
@@ -59,10 +85,15 @@ def backend_logout():
 @bp.route("/pwd/edit", methods=["GET", "POST"])
 @login_required
 def backend_pwd_edit():
-    form = PWDForm()
-    if form.validate_on_submit():
+    login_pattern = LoginPattern.objects.first()
+    form = PWDForm(login_pattern=login_pattern)
+    if request.method == "POST":
         admin = Administrators.objects.get(id=current_user.id)
-        admin.password = form.pwd.data
+        if form.pwd.data:
+            admin.password = form.pwd.data
+        print form.radio.data
+        login_pattern.login_pattern = int(form.radio.data)
+        login_pattern.save()
         admin.save()
         return "修改成功"
     return tmpl(form=form, admin=current_user)
