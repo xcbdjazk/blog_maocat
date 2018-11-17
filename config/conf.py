@@ -32,8 +32,8 @@ class Config(object):
     MAIL_USE_SSL = True
     # 邮件账户的用户名
     MAIL_USERNAME = "zk246422@163.com"
-    # 邮件账户的密码 
-    MAIL_PASSWORD = "xxxx"
+    # 邮件账户的密码
+    MAIL_PASSWORD = "zk987456321"
 
 
 

@@ -11,7 +11,6 @@ import os
 import re
 import json
 from utils import json_message
-
 from utils.uploader import Uploader
 
 bp = Blueprint("backend", __name__, url_prefix="/backend")
