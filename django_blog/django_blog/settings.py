@@ -74,9 +74,13 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+     'default':{
+        'ENGINE':'django.db.backends.postgresql_psycopg2',
+        'NAME':'blog',#数据库名字
+        'USER':'maocat',#登录用户名
+        'PASSWORD':'123456',
+        'HOST':'postgres',#数据库IP地址
+        'PORT':'5432',
     }
 }
 
