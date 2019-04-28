@@ -1,3 +1,4 @@
+
 from django.db import models
 from django_blog import settings
 import hashlib
@@ -7,8 +8,13 @@ from .base import Model
 class Admin(Model):
 
     aid = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=20)
     password_hash = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50, null=True)
+    name = models.CharField(max_length=20, null=True)
+    username = models.CharField(max_length=20, null=True)
+    mobile = models.EmailField(max_length=11, null=True)
+    desc = models.CharField(max_length=128, null=True)
+    title = models.CharField(max_length=128, null=True)
 
     class Meta:
         db_table = "admin"

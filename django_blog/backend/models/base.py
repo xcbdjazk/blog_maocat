@@ -1,3 +1,4 @@
+
 from django.db import models
 import datetime
 import django.utils.timezone as timezone
@@ -8,3 +9,7 @@ class Model(models.Model):
 
     class Meta:
         abstract = True
+
+    def save(self, *args, **kwargs):
+        self.update_time = datetime.datetime.now()
+        super(Model, self).save(*args, **kwargs)
