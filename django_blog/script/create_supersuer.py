@@ -19,7 +19,7 @@ if option == '1':
         password = input("password:").strip()
 
         def verify(name, password):
-            if 4 < len(name) < 6 and 4 < len(password) < 12:
+            if 4 < len(name) < 12 and 4 < len(password) < 12:
                 return True
             print('name or pwd length error')
             return False
@@ -29,6 +29,7 @@ if option == '1':
             admin.name = name
             admin.password = password
             admin.save()
+            print('success')
 elif option == '2':
     admin = Admin.objects.first()
     if not admin:
@@ -39,3 +40,4 @@ elif option == '2':
         admin.username = name
         admin.password = password
         admin.save()
+        print('success')
