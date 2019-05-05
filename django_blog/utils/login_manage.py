@@ -6,7 +6,7 @@ def login_require(func):
 
     @wraps(func)
     def decorator(request, *args, **kwargs):
-        if request.session.get('user_id') :
+        if request.session.get('user_id'):
             return func(request, *args, **kwargs)
         else:
             return HttpResponse('Unauthorized', status=401)

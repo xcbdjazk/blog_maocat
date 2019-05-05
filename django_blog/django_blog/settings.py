@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-
+config_name = os.getenv('DJANGO_CONFIG')
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+if config_name == 'DEV':
+    DEBUG = False
+else:
+    DEBUG = True
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -22,15 +25,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '3kc-o8#j@62)6(mcpj^=2x(8$ie#8voa8l%g#l0_f0*bn4_(4='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

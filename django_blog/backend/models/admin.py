@@ -1,6 +1,6 @@
 
 from django.db import models
-from django_blog import settings
+from django.conf import settings
 import hashlib
 from .base import Model
 

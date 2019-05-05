@@ -1,18 +1,52 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load staticfiles %}
 {% load static_tag %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{{ ad_list }}
-{% funcname '1231231' %}
+{% block head %}
+    <title>admin</title>
+{% endblock %}
+{% block body %}
+{#{{ ad_list }}#}
+{#{% url_for '1231231' %}#}
 <form action="" method="post">
     {% csrf_token %}
     <input type="text" name="username">
     <input type="password" name="password">
-    <button type="submit">提交</button>
+    <button id="submit" type="button">提交</button>
 </form>
-</body>
-</html>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+    $('#submit').click(function (event) {
+        event.stopPropagation();
+        let form_data = $("form").serializeArray();
+        let data = {};
+        $.each(form_data, function (index, arrayData) {
+            if (data[arrayData.name] !== undefined && data[arrayData.name].constructor === Array) {
+
+                data[arrayData.name].push(arrayData.value)
+            } else if (data[arrayData.name] !== undefined) {
+                data[arrayData.name] = [data[arrayData.name]];
+                data[arrayData.name].push(arrayData.value)
+            } else {
+                data[arrayData.name] = (arrayData.value)
+            }
+        });
+        $.post({
+            url:'',
+            data:data,
+            success:function (data) {
+                return data
+            }
+        }).then(function (data) {
+            if (data.code === 400){
+                layer.msg(data.message)
+            }else  if(data.code === 200){
+                window.location.href = data.data.url
+            }
+        })
+    })
+
+    </script>
+{% endblock %}
