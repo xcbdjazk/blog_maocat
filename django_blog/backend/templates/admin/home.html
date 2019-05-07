@@ -3,15 +3,34 @@
 {% load static_tag %}
 {% block head %}
     <title>admin</title>
+    <style>
+    form {
+        text-align: center;
+    }
+    input.form-control{
+        width: 300px;
+    }
+    .banxin {
+        padding-top: 14%;
+        margin-top: 8%;
+        background-color: rgba(185, 185, 185, 0.57);
+    }
+    </style>
 {% endblock %}
 {% block body %}
 {#{{ ad_list }}#}
 {#{% url_for '1231231' %}#}
-<form action="" method="post">
+<form action="" method="post" class="form-horizontal">
     {% csrf_token %}
-    <input type="text" name="username">
-    <input type="password" name="password">
-    <button id="submit" type="button">提交</button>
+    <label for="username" class="col-sm-4 control-label">username:</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name="username" >
+    </div>
+    <label for="password" class="col-sm-4 control-label">password:</label>
+    <div class="col-sm-8">
+      <input  class="form-control" type="password" name="password" >
+    </div>
+    <button class="btn btn-default" id="submit" type="button">提交</button>
 </form>
 
 {% endblock %}

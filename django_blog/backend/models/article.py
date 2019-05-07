@@ -7,6 +7,29 @@ from .base import Model
 class Article(Model):
     class Meta:
         db_table = "article"
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=128)
     desc = models.CharField(max_length=4096)
-    tag = models
+    tag = models.ForeignKey("Tag", to_field="id", null=True, on_delete=models.SET_NULL)
+
+
+'''on_delete attr '''
+# 　 models.CASCADE,对就对象删除后，包含ForeignKey的字段也会被删除
+#
+# 　　models.PROTECT,删除时会引起ProtectedError
+#
+# 　　models.SET_NULL,注意只有当当前字段设置null设置为True才有效，此情况会将ForeignKey字段设置为null
+#
+# 　　models.SET_DEFAULT ,同样，当前字段设置了default才有效，此情况会将ForeignKey 字段设置为default 值
+#
+# 　　moels.SET,此时需要指定set的值
+#
+# 　　models.DO_NOTHING ,什么也不做
+
+
+class Tag(Model):
+    class Meta:
+        db_table = "tag"
+
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=32)
