@@ -16,14 +16,8 @@ from urllib import parse
 from django.conf import settings
 
 from django.views.decorators.csrf import csrf_exempt
-
+from utils.qiniu_conf import Config
 from utils.redis_session import session
-UEDITOR_UPLOAD_PATH = ""
-UEDITOR_UPLOAD_TO_QINIU = False
-UEDITOR_QINIU_ACCESS_KEY = ""
-UEDITOR_QINIU_SECRET_KEY = ""
-UEDITOR_QINIU_BUCKET_NAME = ""
-UEDITOR_QINIU_DOMAIN = ""
 
 
 def _random_filename(rawfilename):
@@ -52,24 +46,13 @@ def upload(request):
         image = request.FILES.get("upfile")
         filename = image.name
         save_filename = _random_filename(filename)
-        result = {
-            'state': '',
-            'url': '',
-            'title': '',
-            'original': ''
-        }
-        if UEDITOR_UPLOAD_TO_QINIU:
-            if not sys.modules.get('qiniu'):
-                raise RuntimeError('没有导入qiniu模块！')
-            q = qiniu.Auth(UEDITOR_QINIU_ACCESS_KEY, UEDITOR_QINIU_SECRET_KEY)
-            token = q.upload_token(UEDITOR_QINIU_BUCKET_NAME)
-            buffer = BytesIO()
-            image.save(buffer)
-            buffer.seek(0)
-            ret, info = qiniu.put_data(token, save_filename, buffer.read())
+        if Config.UEDITOR_UPLOAD_TO_QINIU:
+            q = qiniu.Auth(Config.UEDITOR_QINIU_ACCESS_KEY, Config.UEDITOR_QINIU_SECRET_KEY)
+            token = q.upload_token(Config.BUCKET_CONF['upload']['name'])
+            ret, info = qiniu.put_data(token, save_filename, image.read())
             if info.ok:
                 result['state'] = "SUCCESS"
-                result['url'] = parse.urljoin(UEDITOR_QINIU_DOMAIN, ret['key'])
+                result['url'] = parse.urljoin(Config.BUCKET_CONF['upload']['url'], ret['key'])
                 result['title'] = ret['key']
                 result['original'] = ret['key']
         else:
@@ -80,15 +63,15 @@ def upload(request):
             result['original'] = image.name
 
     elif action == 'uploadscrawl':
-        base64data = request.FILES.get("upfile")
+        base64data = request.POST.get("upfile")
         img = base64.b64decode(base64data)
         filename = _random_filename('xx.png')
-        filepath = os.path.join(UEDITOR_UPLOAD_PATH, filename)
+        filepath = os.path.join(settings.BASE_DIR, 'backend', 'static', 'ueditor_image', filename)
         with open(filepath, 'wb') as fp:
             fp.write(img)
         result = {
             "state": "SUCCESS",
-            "url": filepath,
+            "url": '/static/ueditor_image/' + filename,
             "title": filename,
             "original": filename
         }
