@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 .idea
+qiniu_conf.py
 ueditor_image
 # C extensions
 *.so
