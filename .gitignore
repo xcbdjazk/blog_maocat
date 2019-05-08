@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 .idea
+ueditor_image
 # C extensions
 *.so
 utils/my.json

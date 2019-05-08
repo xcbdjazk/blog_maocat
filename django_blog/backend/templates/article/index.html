@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load static_tag %}
+{% block head %}
+    <title>article</title>
+    <script src="{% url_for 'ueditor/ueditor.config.js' %}"></script>
+    <script src="{% url_for 'ueditor/ueditor.all.min.js' %}"></script>
+{% endblock %}
+{% block body %}
+    {{ MEDIA_URL }}
+    <script id="container" name="content" type="text/plain">
+    </script>
+{% endblock %}
+
+{% block script %}
+
+    <script type="text/javascript">
+        var ue = UE.getEditor('container',{
+            'serverUrl': '{% url 'upload' %}'
+        });
+    </script>
+{% endblock %}

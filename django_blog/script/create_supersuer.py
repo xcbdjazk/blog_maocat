@@ -9,6 +9,13 @@ django.setup()
 
 from backend.models.admin import Admin
 
+
+def verify(name, password):
+    if 4 < len(name) < 12 and 4 < len(password) < 12:
+        return True
+    print('name or pwd length error')
+    return False
+
 print('add admin:1 ,edit admin:2')
 option = input("choice:")
 if option == '1':
@@ -18,11 +25,7 @@ if option == '1':
         name = input("name:").strip()
         password = input("password:").strip()
 
-        def verify(name, password):
-            if 4 < len(name) < 12 and 4 < len(password) < 12:
-                return True
-            print('name or pwd length error')
-            return False
+
 
         if verify(name, password):
             admin = Admin()
@@ -37,7 +40,8 @@ elif option == '2':
     else:
         name = input("name:").strip()
         password = input("password:").strip()
-        admin.username = name
-        admin.password = password
-        admin.save()
-        print('success')
+        if verify(name, password):
+            admin.username = name
+            admin.password = password
+            admin.save()
+            print('success')
