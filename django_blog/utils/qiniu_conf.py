@@ -1,5 +1,6 @@
 from django.conf import settings
 
+
 # UEDITOR_UPLOAD_PATH = ""
 
 
@@ -15,16 +16,18 @@ class Config(object):
     # }
     # qshell doc:--- > https://github.com/qiniu/qshell/blob/master/docs/qupload.md
     BUCKET_CONF = {
-        'static':{
-            'name':'static',
-            'key_prefix':'backend/',
-            'src_dir':'backend/static',
-            'url':'http://static.maocatooo.cn/',
+        'static': {
+            'name': 'static',
+            'access_key': UEDITOR_QINIU_ACCESS_KEY,
+            'secret_key': UEDITOR_QINIU_SECRET_KEY,
+            'key_prefix': 'backend/',
+            'src_dir': 'backend/static',
+            'url': 'http://static.maocatooo.cn/',
         },
-        'upload':{
-            'name':'blog',
+        'upload': {
+            'name': 'blog',
             'key_prefix': 'upload/',
             # 'src_dir': 'upload/',
-            'url':'http://upload.maocatooo.cn/',
+            'url': 'http://upload.maocatooo.cn/',
         }
     }
