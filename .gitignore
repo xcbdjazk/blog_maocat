@@ -7,6 +7,7 @@ qiniu_conf.py
 ueditor_image
 # C extensions
 *.so
+migrations
 utils/my.json
 # Distribution / packaging
 .Python
