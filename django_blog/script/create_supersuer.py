@@ -16,7 +16,9 @@ def verify(name, password):
     print('name or pwd length error')
     return False
 
+
 print('add admin:1 ,edit admin:2')
+
 option = input("choice:")
 if option == '1':
     if Admin.objects.all():
@@ -24,9 +26,6 @@ if option == '1':
     else:
         name = input("name:").strip()
         password = input("password:").strip()
-
-
-
         if verify(name, password):
             admin = Admin()
             admin.name = name

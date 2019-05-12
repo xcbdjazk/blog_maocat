@@ -10,8 +10,14 @@ class Article(Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=128)
     desc = models.CharField(max_length=4096)
-    tag = models.ForeignKey("Tag", to_field="id", null=True, on_delete=models.SET_NULL)
+    desc_txt = models.CharField(max_length=4096, null=True)
+    is_active = models.BooleanField(default=True)
+    tag = models.ManyToManyField("Tag")
 
+    @property
+    def tags_name(self):
+
+        return ','.join([i.name for i in self.tag.all()])
 
 '''on_delete attr '''
 # 　 models.CASCADE,对就对象删除后，包含ForeignKey的字段也会被删除

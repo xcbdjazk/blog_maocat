@@ -5,6 +5,8 @@ from django.shortcuts import redirect
 from ..helps import rest
 from django.views.decorators.http import require_http_methods
 from ..models.admin import Admin
+from ..models.article import Article
+from ..models.article import Tag
 from utils.login_manage import login_require
 
 
@@ -41,6 +43,11 @@ def home(request):
 @require_http_methods(["GET", 'POST'])
 @login_require
 def index(request):
-
-    return render(request, 'admin/index.html')
+    articles = Article.objects.order_by('id').all()
+    # for i in articles:
+    #     print(i.tag.all())
+    content = dict(
+        articles=articles,
+    )
+    return render(request, 'admin/index.html', content)
 

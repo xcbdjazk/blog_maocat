@@ -3,9 +3,46 @@
 {% load static_tag %}
 {% block head %}
     <title>admin</title>
+
+    <style>
+        li {
+            display: inline-block;
+            width: 30px;
+            line-height: 30px;
+            background-color: rgba(200, 255, 163, 0.24);
+        }
+        li:hover{
+            background-color: rgba(255, 134, 143, 0.24);
+        }
+    </style>
 {% endblock %}
 {% block body %}
-12312312312
+    <div class="row">
+        <ul >
+            <li class="col-xs-3 text-center"><a href="{% url 'article_index' %}"> add article</a></li>
+            <li class="col-xs-3 text-center"><a href=""> edit user </a></li>
+            <li class="col-xs-3 text-center"><a href="javascript:void (0)"> do some thing </a></li>
+        </ul>
+    </div>
+    <table class="table">
+
+        {% for foo in articles %}
+            {% if foo.is_active %}
+
+            <tr class="active">
+            {% else %}
+            <tr>
+            {% endif %}
+            <td>{{ foo.title }}</td>
+            <td>{{ foo.tags_name }}</td>
+            <td>
+                <a href="{% url 'article_edit' id=foo.id %}" class="btn btn-default btn-sm">edit</a>
+
+                <a href="{% url 'article_active' id=foo.id %}" class="btn btn-default btn-sm">active</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
 
 {% block script %}

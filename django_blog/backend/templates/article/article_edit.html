@@ -38,11 +38,19 @@
     <div class="form-group">
         <label for="title" class="col-sm-2 text-center">title</label>
         <div class="col-sm-10">
-            <input class="form-control" id="title" name="title">
+            <input class="form-control" id="title" name="title" value="{{ art.title }}">
         </div>
         <label for="tag" class="col-sm-2 text-center">tag</label>
         <div class="col-sm-8">
             <select class="form-control" id="tag" name="tag" multiple>
+                {% for foo in tags %}
+                    {% if foo in art.tag.all %}
+                        <option value="{{ foo.id }}" selected>{{ foo.name }}</option>
+                    {% else %}
+                        <option value="{{ foo.id }}">{{ foo.name }}</option>
+                    {% endif %}
+                {% endfor %}
+
             </select>
         </div>
         <div class="col-sm-2">
@@ -51,6 +59,7 @@
         </div>
     </div>
     <script id="container" name="content"type="text/plain">
+        {{ art.desc | safe  }}
     </script>
     <button type="button" id="add-article"> 提交 </button>
     </div>

@@ -1,0 +1,28 @@
+{% extends 'base_pop.html' %}
+{% load staticfiles %}
+{% load static_tag %}
+{% block head %}
+    <title>tag list</title>
+    <style>
+    </style>
+{% endblock %}
+{% block body %}
+    <table class="table table-hover">
+    <tr>
+        <th>tag name</th>
+        <th> edit </th>
+    </tr>
+    {% for foo in tags %}
+        <tr>
+            <td>{{ foo.name }}</td>
+            <td><a href="{% url 'tag_edit' id=foo.id %}" class="btn btn-primary btn-xs"> edit </a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
+
+{% block script %}
+    <script>
+
+    </script>
+{% endblock %}

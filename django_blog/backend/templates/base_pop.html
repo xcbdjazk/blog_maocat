@@ -1,0 +1,22 @@
+{% load staticfiles %}
+{% load static_tag %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<link rel="shortcut icon"  href="{% url_for 'favicon.ico' %}" type="image/x-icon"/>
+    <link rel="stylesheet" href="{% url_for 'layer/theme/default/layer.css' %}">
+    <link rel="stylesheet" href="{% url_for 'bootstrap-3.3.7-dist/css/bootstrap.css' %}">
+    <script src="{% url_for 'js/jquery.min.js' %}"></script>
+    <script src="{% url_for 'layer/layer.js' %}"></script>
+    <script src="{% url_for 'bootstrap-3.3.7-dist/js/bootstrap.js' %}"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+<div class="banxin">
+    {% block body %}{% endblock %}
+</div>
+
+    {% block script %}{% endblock %}
+</body>
+</html>

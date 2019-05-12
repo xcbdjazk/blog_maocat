@@ -2,6 +2,9 @@
     margin: 0;
     padding: 0;
 }
+li{
+     list-style: none;
+ }
 .banxin {
     width: 1000px;
     min-height: 600px;
