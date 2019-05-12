@@ -8,18 +8,19 @@ from ..models.admin import Admin
 from ..models.article import Article
 from ..models.article import Tag
 from utils.login_manage import login_require
-
+from utils.redis_session import REDIS_CLIENT
 
 @require_http_methods(["GET", 'POST'])
 # @login_require
 def home(request):
-    if request.session.get("user_id"):
+    if request.session.get("user_id") and REDIS_CLIENT.get(request.session.get("user_id")):
         return redirect('index')
     if request.method == 'POST':
         # loggin user
         admin = Admin.objects.filter(username=request.POST.get('username')).order_by('create_time').last()
         if admin and admin.verify_password(request.POST.get('password')):
             request.session['user_id'] = admin.aid
+            REDIS_CLIENT.set(request.session['user_id'], request.session['user_id'], ex=10000)
             return rest.success("登录成功", data={
                 "url": redirect('index').url
             })
