@@ -2,7 +2,6 @@ import os
 import django
 import sys
 import json
-import sys
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django_blog.settings")
 # 工作目录添加执行环境里面
 sys.path.append(os.getcwd())

@@ -23,7 +23,7 @@ def index(request):
         article.desc_txt = request.POST.get('contenttxt')
         article.save()
         article.tag.set(tags)
-        return rest.success('添加成功')
+        return rest.success('添加成功', data={'url': redirect('index').url})
     return render(request, 'article/index.html')
 
 
@@ -39,7 +39,7 @@ def article_edit(request, id):
         art.desc_txt = request.POST.get('contenttxt')
         art.save()
         art.tag.set(tags)
-        return rest.success('添加成功')
+        return rest.success('添加成功', data={'url': redirect('index').url})
 
     tags = Tag.objects.all()
     content = dict(
@@ -62,7 +62,6 @@ def article_active(request, id):
 @login_require
 def tag_add(request):
     if request.method == 'POST':
-        print(request.POST)
         tag_name = request.POST.get('tag')
         if not tag_name:
             return rest.params_error('不能爲空')
