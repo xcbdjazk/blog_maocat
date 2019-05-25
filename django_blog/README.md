@@ -13,3 +13,7 @@ flask实在太熟悉了,想着使用django CBV 开发一套,以前学习过,现�
 `python manage.py makemigrations backend`
 
 `python manage.py migrate`
+
+创建 vue frontend
+
+`vue init webpack frontend`
