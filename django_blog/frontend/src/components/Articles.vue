@@ -1,13 +1,19 @@
 <template>
   <div class="articles">
-    <el-row>
-      <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+    <el-row :gutter="10">
+      <el-col :xs="24" :sm="18" :md="18" :lg="18" :xl="18">
         <div class="grid-content bg-purple-light">
-
-      </div>
+           <div v-for="(article, index) in articles" :key="index">
+             {{ article.id }}
+             {{ article.title }}
+             {{ article.desc_txt }}
+           </div>
+         </div>
       </el-col>
-      <el-col :xs="0" :sm="12" :md="12" :lg="12" :xl="12">
-        <div class="grid-content bg-purple hidden-xs-only"></div>
+      <el-col :xs="0" :sm="6" :md="6" :lg="6" :xl="6">
+        <div class="grid-content bg-purple hidden-xs-only">
+
+        </div>
       </el-col>
 
     </el-row>
@@ -38,7 +44,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .articles {
-    max-width: 1200px;
+    max-width: 1000px;
     border-bottom: 1px;
     margin: 0 auto;
   }
