@@ -1,34 +1,7 @@
 <template>
   <div>
     <bar></bar>
-    <div class="articles">
-
-      <el-row :gutter="10">
-        <el-col :xs="24" :sm="18" :md="18" :lg="18" :xl="18">
-          <div class="grid-content bg-purple-light">
-            <div v-for="(article, index) in articles" :key="index">
-              <div class="article">
-                <h4>
-                  <router-link :to="{name:'detail',params:{id:article.id}}">
-                  {{ article.title }}
-                  </router-link>
-                </h4>
-                {{ article.id }}
-                {{ article.desc_txt }}
-              </div>
-              <hr>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="0" :sm="6" :md="6" :lg="6" :xl="6">
-          <div class="grid-content bg-purple hidden-xs-only">
-            <profile></profile>
-          </div>
-        </el-col>
-
-      </el-row>
-
-    </div>
+    123213
   </div>
 
 </template>
@@ -48,11 +21,7 @@
       bar:Bar,
       profile:Profile
     },
-    created() {
-      getArticles().then((data) => {
-        this.articles = data
-      })
-    }
+
 
 
   }
