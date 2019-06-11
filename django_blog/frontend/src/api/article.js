@@ -1,10 +1,17 @@
 import request from '../utils/request'
 
 
-export function getArticles(){
-  return request.get('/articls/')
+function getArticles(){
+  return request.get('/articles/')
 }
 
+function getArticleById(id){
+  return request.get(`/article/${id}`)
+}
+export {
+  getArticles,
+  getArticleById
+}
 // or
 /*
 * export {

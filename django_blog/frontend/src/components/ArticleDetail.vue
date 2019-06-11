@@ -1,34 +1,68 @@
 <template>
   <div>
     <bar></bar>
-    123213
-  </div>
+    <div class="article">
+      <el-row :gutter="10">
+        <el-col :xs="24" :sm="18" :md="18" :lg="18" :xl="18">
+          <div class="article-detail">
+            <div class="article-title">
+              <h4>{{article.title}}</h4>
+            </div>
+            <div class="article-desc">
+              <span class="el-icon-user">MaoCat</span>
 
+              <span class="el-icon-time">{{article.create_time | formatDate}}</span>
+            </div>
+            <div class="article-content" v-html="article.desc">
+
+            </div>
+          </div>
+        </el-col>
+        <el-col :xs="0" :sm="6" :md="6" :lg="6" :xl="6">
+          <div class="hidden-xs-only">
+            <profile></profile>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+  </div>
 </template>
 
 <script>
-  import {getArticles} from '../api/article'
-  import Bar from './Bar'
-  import Profile from './Profile'
-  export default {
-    name: 'Articles',
-    data() {
-      return {
-        articles: []
-      }
-    },
-    components:{
-      bar:Bar,
-      profile:Profile
-    },
-
-
+import {getArticleById} from '../api/article'
+import Bar from './Bar'
+import Profile from './Profile'
+export default {
+  name: 'Articles',
+  data() {
+    return {
+      article: {}
+    }
+  },
+  components:{
+    bar:Bar,
+    profile:Profile
+  },
+  created() {
+    getArticleById(this.$route.params.id).then((data) => {
+      this.article = data
+    })
+  },
+  filters:{
+  cutOutDesc(desc){
+    return desc.length > 100?desc.substring(0, 100) + '...': desc
+  },
+  formatDate(datetime){
+    let date = new Date(datetime)
+    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
 
   }
+}
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
   hr {
     margin: 0 auto;
     width: 80%;
@@ -37,9 +71,6 @@
     font-size: 30px;
   }
   .article {
-    padding: 20px 30px;
-  }
-  .articles {
     max-width: 1000px;
     height: 2000px;
     border-bottom: 1px;
@@ -47,20 +78,13 @@
     margin: 0 auto;
     padding-top: 10px;
   }
-  .el-col {
-    border-radius: 4px;
+  .article-detail{
+    padding: 20px 10%;
   }
-  .bg-purple-dark {
-    background: #99a9bf;
+  .article-detail > div {
+    margin-top: 20px;
   }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
+  .article-content{
+    margin-top: 50px;
   }
 </style>

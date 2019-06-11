@@ -2,6 +2,7 @@
   <div>
     <div class="progress-bar" id="bar" style="height: 2px;background-color: #000;position: fixed;z-index: 1999">
     </div>
+
   </div>
 </template>
 
@@ -32,7 +33,6 @@
           // window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
           let windowHeight = this.getWindowHeight()
           let documentHeight = this.getScrollHeight()
-          console.log(scrollHeight,windowHeight, documentHeight)
           this.scroll = parseFloat(scrollHeight / (documentHeight-windowHeight)*100).toFixed(2)
         },
         getScrollTop:function (){

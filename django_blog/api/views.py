@@ -13,3 +13,10 @@ class ArticleInfo(APIView):
        asr = ArticleSerializerModel(instance=atcs, many=True)
        return JsonResponse(asr.data, safe=False)
 
+
+class ArticleDetail(APIView):
+
+    def get(self, req, id, *args, **kwargs):
+       atcs = models.Article.objects.get(id=id)
+       asr = ArticleSerializerModel(instance=atcs)
+       return JsonResponse(asr.data, safe=False)
