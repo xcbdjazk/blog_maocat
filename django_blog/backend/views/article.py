@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import JsonResponse
+import re
 from django.shortcuts import redirect
 from ..helps import rest
 from django.views.decorators.http import require_http_methods
@@ -20,7 +21,14 @@ def index(request):
 
         article.title = request.POST.get('title')
         article.desc = request.POST.get('content')
-        article.desc_txt = request.POST.get('contenttxt')
+        # 去掉p标签
+        content_text1 = article.desc.replace('<p>', '').replace('</p>', '').replace('\'', '')
+        # 去掉图片链接
+        content_text2 = re.sub('!\[\]\((.*?)\)', '', content_text1)
+        # 去掉markdown标签
+        pattern = '[\\\`\*\_\[\]\#\+\-\!\>]'
+        content_text3 = re.sub(pattern, '', content_text2)
+        article.desc_txt = content_text3
         article.save()
         article.tag.set(tags)
         return rest.success('添加成功', data={'url': redirect('index').url})
@@ -35,8 +43,14 @@ def article_edit(request, id):
         tags = Tag.objects.filter(id__in=request.POST.getlist('tag[]')).all()
 
         art.title = request.POST.get('title')
-        art.desc = request.POST.get('content')
-        art.desc_txt = request.POST.get('contenttxt')
+        art.desc = request.POST.get('content').strip() # 去掉p标签
+        content_text1 = art.desc.replace('<p>', '').replace('</p>', '').replace('\'', '')
+        # 去掉图片链接
+        content_text2 = re.sub('!\[\]\((.*?)\)', '', content_text1)
+        # 去掉markdown标签
+        pattern = '[\\\`\*\_\[\]\#\+\-\!\>]'
+        content_text3 = re.sub(pattern, '', content_text2)
+        art.desc_txt = content_text3
         art.save()
         art.tag.set(tags)
         return rest.success('添加成功', data={'url': redirect('index').url})

@@ -3,8 +3,8 @@
 {% load static_tag %}
 {% block head %}
     <title>article</title>
-    <script src="{% url_for 'ueditor/ueditor.config.js' %}"></script>
-    <script src="{% url_for 'ueditor/ueditor.all.min.js' %}"></script>
+    <script src="{% url_for 'editormd/editormd.js' %}"></script>
+    <link rel="stylesheet" href="{% url_for 'editormd/css/editormd.css' %}"/>
     <link rel="stylesheet" href="{% url_for 'select2/css/select2.css' %}">
     <link rel="stylesheet" href="{% url_for 'select2/css/select2-bootstrap.css' %}">
     <script src="{% url_for 'select2/js/select2.js' %}"></script>
@@ -15,18 +15,20 @@
             line-height: 30px;
             background-color: rgba(200, 255, 163, 0.24);
         }
-        .row > li:hover{
+
+        .row > li:hover {
             background-color: rgba(255, 134, 143, 0.24);
         }
-        .article-form{
-          margin-top: 20px;
+
+        .article-form {
+            margin-top: 20px;
         }
 
     </style>
 {% endblock %}
 {% block body %}
     <div class="row">
-        <ul >
+        <ul>
             <li class="col-xs-3 text-center"><a href="{% url 'index' %}"> go back </a></li>
             <li class="col-xs-3 text-center"><a href="{% url 'article_index' %}"> add article</a></li>
             <li class="col-xs-3 text-center"><a href=""> edit user </a></li>
@@ -35,33 +37,33 @@
     </div>
     <div class="article-form row form-horizontal">
 
-    <div class="form-group">
-        <label for="title" class="col-sm-2 text-center">title</label>
-        <div class="col-sm-10">
-            <input class="form-control" id="title" name="title" value="{{ art.title }}">
-        </div>
-        <label for="tag" class="col-sm-2 text-center">tag</label>
-        <div class="col-sm-8">
-            <select class="form-control" id="tag" name="tag" multiple>
-                {% for foo in tags %}
-                    {% if foo in art.tag.all %}
-                        <option value="{{ foo.id }}" selected>{{ foo.name }}</option>
-                    {% else %}
-                        <option value="{{ foo.id }}">{{ foo.name }}</option>
-                    {% endif %}
-                {% endfor %}
+        <div class="form-group">
+            <label for="title" class="col-sm-2 text-center">title</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="title" name="title" value="{{ art.title }}">
+            </div>
+            <label for="tag" class="col-sm-2 text-center">tag</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="tag" name="tag" multiple>
+                    {% for foo in tags %}
+                        {% if foo in art.tag.all %}
+                            <option value="{{ foo.id }}" selected>{{ foo.name }}</option>
+                        {% else %}
+                            <option value="{{ foo.id }}">{{ foo.name }}</option>
+                        {% endif %}
+                    {% endfor %}
 
-            </select>
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <a href="{% url 'tag_add' %}" class="btn btn-default btn-sm layer-pop"> add tag</a>
+                <a href="{% url 'tag_list' %}" class="btn btn-default btn-sm layer-pop"> tag list</a>
+            </div>
         </div>
-        <div class="col-sm-2">
-            <a href="{% url 'tag_add' %}" class="btn btn-default btn-sm layer-pop"> add tag</a>
-            <a href="{% url 'tag_list' %}" class="btn btn-default btn-sm layer-pop"> tag list</a>
+        <div id="editor">
+            <textarea style="display:none;"> {{ art.desc }}</textarea>
         </div>
-    </div>
-    <script id="container" name="content"type="text/plain">
-        {{ art.desc | safe  }}
-    </script>
-    <button type="button" id="add-article"> 提交 </button>
+        <button type="button" id="add-article"> 提交</button>
     </div>
 
 {% endblock %}
@@ -69,72 +71,80 @@
 {% block script %}
 
     <script type="text/javascript">
-        // ueditor 初始化
-        var ue = UE.getEditor('container',{
-            'serverUrl': '{% url 'upload' %}'
+        //    调用编辑器
+        var testEditor;
+        $(function () {
+            testEditor = editormd("editor", {
+                width: "1000px",
+                height: 640,
+                syncScrolling: "single",
+                path: "{% url_for 'editormd/lib/' %}",
+                imageUpload: true,
+                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL: '{% url 'upload' %}',
+            });
+
         });
-        ue.ready(function () {
-            // 設置高度
-            ue.setHeight(600)
-        })
     </script>
     <script>
         $('#tag').select2({
             ajax: {
-            url: '{% url 'tag_ajax'%}',
-            type:'GET',
-            dataType: 'json',
-            data: function(){ return {'projectId':$('#projectId').val()}},
-            processResults: function (data) {
-                 return {
-                            results: data.data
-                     };
-             }
+                url: '{% url 'tag_ajax'%}',
+                type: 'GET',
+                dataType: 'json',
+                data: function () {
+                    return {'projectId': $('#projectId').val()}
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.data
+                    };
+                }
             }
         })
 
 
     </script>
     <script>
-    $('.layer-pop').click(function (event) {
-        event.preventDefault();
-        let url = $(this).attr('href')
-        layer.open({
-          type: 2,
-          shadeClose: true,
-          area: ['700px', '450px'],
-          // fixed: false, //不固定
-          // maxmin: true,
-          content: url
-        });
-    })
-    $('#add-article').click(function () {
-        let title = $('#title').val();
-        if(title === ''){
-            layer.msg('请添加title')
-            return
-        }
-        let tag = $('#tag').val()
-        if (tag.length === 0){
-            layer.msg('请选择标签')
-            return
-        }
-        $.post({
-            url:'',
-            data:{
-                csrfmiddlewaretoken:'{{ csrf_token }}',
-                title:title,
-                tag:tag,
-                content:ue.getContent(),
-                contenttxt:ue.getContentTxt(),
-            },
-            success:function (data) {
-                return data
-            }
-
-        }).then(function (data) {
-            window.location.href = data.data.url
+        $('.layer-pop').click(function (event) {
+            event.preventDefault();
+            let url = $(this).attr('href')
+            layer.open({
+                type: 2,
+                shadeClose: true,
+                area: ['700px', '450px'],
+                // fixed: false, //不固定
+                // maxmin: true,
+                content: url
+            });
         })
-    })
+        $('#add-article').click(function () {
+            let title = $('#title').val();
+            if (title === '') {
+                layer.msg('请添加title')
+                return
+            }
+            let tag = $('#tag').val()
+            if (tag.length === 0) {
+                layer.msg('请选择标签')
+                return
+            }
+            $.post({
+                url: '',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    title: title,
+                    tag: tag,
+                    content: testEditor.getMarkdown(),
+                    contenttxt: '',
+                },
+                success: function (data) {
+                    return data
+                }
+
+            }).then(function (data) {
+                window.location.href = data.data.url
+            })
+        })
     </script>
 {% endblock %}

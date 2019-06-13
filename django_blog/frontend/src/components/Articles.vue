@@ -39,7 +39,7 @@
           </div>
         </el-col>
         <el-col :xs="0" :sm="6" :md="6" :lg="6" :xl="6">
-          <div class="grid-content bg-purple hidden-xs-only">
+          <div class="hidden-xs-only">
             <profile></profile>
           </div>
         </el-col>
@@ -48,7 +48,7 @@
   </div>
 </template>
 
-<script>
+<script >
   import {getArticles} from '../api/article'
   import Bar from './Bar'
   import Profile from './Profile'
@@ -113,7 +113,6 @@
     margin: 20px 0;
     color: #323e4e;
     font-family: sans-serif;
-
   }
   .grid-content {
     border-radius: 4px;

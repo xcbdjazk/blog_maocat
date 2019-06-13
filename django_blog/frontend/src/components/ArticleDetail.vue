@@ -13,8 +13,7 @@
 
               <span class="el-icon-time">{{article.create_time | formatDate}}</span>
             </div>
-            <div class="article-content" v-html="article.desc">
-
+            <div class="article-content" v-html="mark(article.desc)" v-highlight>
             </div>
           </div>
         </el-col>
@@ -29,62 +28,80 @@
 </template>
 
 <script>
-import {getArticleById} from '../api/article'
-import Bar from './Bar'
-import Profile from './Profile'
-export default {
-  name: 'Articles',
-  data() {
-    return {
-      article: {}
-    }
-  },
-  components:{
-    bar:Bar,
-    profile:Profile
-  },
-  created() {
-    getArticleById(this.$route.params.id).then((data) => {
-      this.article = data
-    })
-  },
-  filters:{
-  cutOutDesc(desc){
-    return desc.length > 100?desc.substring(0, 100) + '...': desc
-  },
-  formatDate(datetime){
-    let date = new Date(datetime)
-    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
 
+  import showdown from 'showdown'
+  import {getArticleById} from '../api/article'
+  import Bar from './Bar'
+  import Profile from './Profile'
+
+  export default {
+    name: 'Articles',
+    data() {
+      return {
+        article: {}
+
+      }
+    },
+    components: {
+      bar: Bar,
+      profile: Profile,
+    },
+    created() {
+      getArticleById(this.$route.params.id).then((data) => {
+        this.article = data
+      })
+    },
+    methods:{
+      mark(desc) {
+        let converter = new showdown.Converter()
+        return converter.makeHtml(desc)
+      },
+    },
+    filters: {
+      cutOutDesc(desc) {
+        return desc.length > 100 ? desc.substring(0, 100) + '...' : desc
+      },
+      mark(desc) {
+        let converter = new showdown.Converter()
+        return converter.makeHtml(desc)
+      },
+      formatDate(datetime) {
+        let date = new Date(datetime)
+        return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+
+      }
+    }
   }
-}
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
   hr {
     margin: 0 auto;
     width: 80%;
   }
+
   h4 {
     font-size: 30px;
   }
+
   .article {
     max-width: 1000px;
-    height: 2000px;
     border-bottom: 1px;
     /*border-top: 1px solid #2c3e50;*/
     margin: 0 auto;
     padding-top: 10px;
   }
-  .article-detail{
+
+  .article-detail {
     padding: 20px 10%;
   }
+
   .article-detail > div {
     margin-top: 20px;
   }
-  .article-content{
+
+  .article-content {
     margin-top: 50px;
   }
 </style>

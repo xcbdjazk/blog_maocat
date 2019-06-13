@@ -12,6 +12,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.8.2",
+    "highlight.js": "^9.15.8",
+    "showdown": "^1.9.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

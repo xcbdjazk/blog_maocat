@@ -9,7 +9,14 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css';
 Vue.use(ElementUI)
 /* eslint-disable no-new */
-
+import hljs from 'highlight.js'
+import 'highlight.js/styles/github.css'
+Vue.directive('highlight', (el) => {
+  let blocks = el.querySelectorAll('pre code')
+  blocks.forEach((block) => {
+    hljs.highlightBlock(block)
+  })
+})
 
 new Vue({
   el: '#app',
