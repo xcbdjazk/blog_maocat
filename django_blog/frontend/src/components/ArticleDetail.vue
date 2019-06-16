@@ -76,26 +76,16 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  hr {
-    margin: 0 auto;
-    width: 80%;
-  }
-
-  h4 {
-    font-size: 30px;
-  }
-
   .article {
     max-width: 1000px;
     border-bottom: 1px;
-    /*border-top: 1px solid #2c3e50;*/
     margin: 0 auto;
     padding-top: 10px;
   }
 
-  .article-detail {
-    padding: 20px 10%;
-  }
+  /*.article-detail {*/
+    /*padding: 20px 10%;*/
+  /*}*/
 
   .article-detail > div {
     margin-top: 20px;

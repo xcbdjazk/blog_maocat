@@ -2,7 +2,7 @@ import axios from 'axios'
 
 let service = axios.create(
   {
-    baseURL:'http://192.168.0.183:8000/api',
+    baseURL:'http://127.0.0.1:8000/api',
     timeout: 50000
   }
 )
