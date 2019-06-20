@@ -1,6 +1,8 @@
 certifi==2019.3.9
 chardet==3.0.4
 Django==2.0.2
+django-cors-headers==3.0.1
+djangorestframework==3.9.4
 idna==2.8
 psycopg2==2.8.2
 pytz==2019.1
@@ -8,3 +10,4 @@ qiniu==7.2.2
 redis==3.2.1
 requests==2.21.0
 urllib3==1.24.1
+uWSGI==2.0.18
