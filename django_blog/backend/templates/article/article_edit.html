@@ -78,7 +78,7 @@
                 width: "1000px",
                 height: 640,
                 syncScrolling: "single",
-                path: "{% url_for 'editormd/lib/' %}",
+                path: "{{ qiniu_url }}editormd/lib/",
                 imageUpload: true,
                 imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
                 imageUploadURL: '{% url 'upload' %}',
