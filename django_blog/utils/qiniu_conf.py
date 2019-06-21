@@ -26,8 +26,10 @@ class Config(object):
         },
         'upload': {
             'name': 'blog',
-            'key_prefix': 'upload/',
-            # 'src_dir': 'upload/',
+            'key_prefix': 'frontend/',
+            'access_key': UEDITOR_QINIU_ACCESS_KEY,
+            'secret_key': UEDITOR_QINIU_SECRET_KEY,
+            'src_dir': 'frontend/dist',
             'url': 'http://upload.maocatooo.cn/',
         }
     }
