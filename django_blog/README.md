@@ -17,3 +17,13 @@ flask实在太熟悉了,想着使用django CBV 开发一套,以前学习过,现�
 创建 vue frontend
 
 `vue init webpack frontend`
+
+`
+# uwsgi启动
+
+uwsgi --ini uwsgi.ini
+
+# uwsgi 停止
+
+uwsgi --stop uwsgi.pid
+`
