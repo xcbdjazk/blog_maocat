@@ -44,6 +44,7 @@ def home(request):
 @require_http_methods(["GET", 'POST'])
 @login_require
 def index(request):
+    [][1]
     articles = Article.objects.order_by('id').all()
     # for i in articles:
     #     print(i.tag.all())
