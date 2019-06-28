@@ -15,6 +15,7 @@ RUN apt-get install -y \
     python-dev \
     supervisor
 WORKDIR /opt/webapps
-#ENTRYPOINT ["/bin/bash", "django_blog/script/start.sh"]
 EXPOSE 8001
+#ENTRYPOINT ["/bin/bash", "django_blog/script/start.sh"]
+
 CMD ["/bin/bash"]
