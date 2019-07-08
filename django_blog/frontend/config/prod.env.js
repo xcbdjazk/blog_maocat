@@ -7,7 +7,7 @@ var DEVELOP_CONFIG = {
   STATIC_HOST: '/'
 }
 var DJ_CONFIG = {
-  API_HOST: '"http://maocat.cc/api"',
+  API_HOST: '"http://maocatooo.cn/api"',
   STATIC_HOST: 'http://upload.maocatooo.cn/frontend/'
 }
 let web_config = DEVELOP_CONFIG
