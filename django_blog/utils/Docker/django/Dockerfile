@@ -13,9 +13,12 @@ RUN apt-get install -y \
     python3-pip \
     libpq-dev \
     python-dev \
-    supervisor
+    supervisor \
+    openssh-server
+RUN mkdir -p /var/run/sshd
 WORKDIR /opt/webapps
 EXPOSE 8001
 #ENTRYPOINT ["/bin/bash", "django_blog/script/start.sh"]
 
-CMD ["/bin/bash"]
+#CMD ["/bin/bash"]
+CMD ["/usr/sbin/sshd", "-D"]
