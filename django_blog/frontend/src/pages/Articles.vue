@@ -50,8 +50,8 @@
 
 <script >
   import {getArticles} from '../api/article'
-  import Bar from './Bar'
-  import Profile from './Profile'
+  import Bar from '../components/Bar'
+  import Profile from '../components/Profile'
   export default {
     name: 'Articles',
     data() {

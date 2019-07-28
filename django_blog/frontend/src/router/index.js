@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import Articles from '@/components/Articles';
-import ArticleDetail from '@/components/ArticleDetail';
+import Articles from '@/pages/Articles';
+import ArticleDetail from '@/pages/ArticleDetail';
 import VueRouter from "vue-router";
 import Router from "vue-router";
 Vue.use(Router)
