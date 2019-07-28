@@ -1,29 +1,27 @@
 <template>
   <div>
-    <bar></bar>
-    <div class="article">
-      <el-row :gutter="10">
+    <header>
+      <bar></bar>
+    </header>
+      <el-row :gutter="10" id="body">
         <el-col :xs="24" :sm="18" :md="18" :lg="18" :xl="18">
-          <div class="article-detail">
-            <div class="article-title">
-              <h4>{{article.title}}</h4>
-            </div>
-            <div class="article-desc">
+          <article class="article-detail">
+            <header class="article-title">
+              <h2>{{article.title}}</h2>
+            </header>
+            <nav class="article-desc">
               <span class="el-icon-user">MaoCat</span>
 
               <span class="el-icon-time">{{article.create_time | formatDate}}</span>
-            </div>
+            </nav>
             <div class="article-content" v-html="mark(article.desc)" v-highlight>
             </div>
-          </div>
+          </article>
         </el-col>
-        <el-col :xs="0" :sm="6" :md="6" :lg="6" :xl="6">
-          <div class="hidden-xs-only">
+        <el-col :xs="0" :sm="6" :md="6" :lg="6" :xl="6" class="hidden-xs-only">
             <profile></profile>
-          </div>
         </el-col>
       </el-row>
-    </div>
   </div>
 </template>
 
@@ -76,22 +74,19 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .article {
+  #body {
     max-width: 1000px;
     border-bottom: 1px;
-    margin: 0 auto;
+    margin: 0 auto!important;
     padding-top: 10px;
   }
-
-  /*.article-detail {*/
-    /*padding: 20px 10%;*/
-  /*}*/
-
+  article {
+    padding: 30px 40px;
+  }
   .article-detail > div {
     margin-top: 20px;
   }
-
-  .article-content {
-    margin-top: 50px;
+  nav {
+    margin:15px 0 ;
   }
 </style>
