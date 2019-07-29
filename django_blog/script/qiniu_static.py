@@ -16,6 +16,8 @@ for k, v in Config.BUCKET_CONF.items():
     static_dict = v
     path = static_dict['src_dir'] = os.path.join(settings.BASE_DIR, static_dict['src_dir'])
     static_dict['bucket'] = static_dict['name']
+    static_dict['rescan_local'] = True
+    static_dict['overwrite'] = True
     path_json = os.path.join(os.path.dirname(__file__), "{}.json".format(k))
 
     with open(path_json, 'w') as f:
