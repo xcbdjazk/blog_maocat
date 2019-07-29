@@ -3,6 +3,7 @@ from ..views.admin import home
 from ..views.admin import index
 from ..views import article
 from ..views import upload
+from ..views import user
 
 urlpatterns = [
     path(r'', home, name="home"),
@@ -14,5 +15,6 @@ urlpatterns = [
     path(r'tag/list', article.tag_list, name="tag_list"),
     path(r'tag/edit/<id>', article.tag_edit, name="tag_edit"),
     path(r'tag/tag_ajax', article.tag_ajax, name="tag_ajax"),
+    path(r'edit/user', user.edit_user, name="edit_user"),
     path(r'upload', upload.upload, name="upload"),
 ]

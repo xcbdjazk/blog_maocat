@@ -1,12 +1,10 @@
-# -*-  coding:utf-8 -*-
+    # -*-  coding:utf-8 -*-
 from django.shortcuts import render
-from django.http import JsonResponse
 from django.shortcuts import redirect
 from ..helps import rest
 from django.views.decorators.http import require_http_methods
 from ..models.admin import Admin
 from ..models.article import Article
-from ..models.article import Tag
 from utils.login_manage import login_require
 from utils.redis_session import REDIS_CLIENT
 
