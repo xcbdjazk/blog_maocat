@@ -7,8 +7,8 @@ from django.conf import settings
 class Config(object):
     # UEDITOR_UPLOAD_TO_QINIU = settings.DEBUG
     UEDITOR_UPLOAD_TO_QINIU = not settings.DEBUG
-    UEDITOR_QINIU_ACCESS_KEY = ""
-    UEDITOR_QINIU_SECRET_KEY = ""
+    UEDITOR_QINIU_ACCESS_KEY = "jMRMFqYCIHzvO0fwPvPXCyJy8HEiQYxtD5me1vNg"
+    UEDITOR_QINIU_SECRET_KEY = "Kquqdv-wMD9Ec1Lgysi9tTc8uI-30phf8jyKcOKj"
 
     # {
     #     'name':'BUCKET_NAME',
