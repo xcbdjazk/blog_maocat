@@ -1,43 +1,50 @@
 <template>
-  <div>
+  <div id="articles">
     <header>
       <bar></bar>
     </header>
       <el-row :gutter="10" id="body">
         <el-col :xs="24" :sm="18" :md="18" :lg="18" :xl="18">
           <section>
-            <template v-for="article, index in articles">
+            <template v-for="art in articles">
               <article>
-                <header class="article-title">
+                <header>
                   <h4>
-                    <router-link :to="{name:'detail',params:{id:article.id}}">
-                      {{ article.title }}
+                    <router-link :to="{name:'detail',params:{id:art.id}}">
+                      {{ art.title }}
                     </router-link>
                   </h4>
                 </header>
                 <!--{{ article.id }}-->
                 <nav>
-                  <span class="el-icon-user">MaoCat</span>
+                  <ul>
+                    <li>
+                      <span class="el-icon-user ">MaoCat</span>
+                    </li>
+                    <li>
+                      <span class="el-icon-time">{{art.create_time | formatDate}}</span>
+                    </li>
+                  </ul>  
+                  
 
-                  <span class="el-icon-time">{{article.create_time | formatDate}}</span>
+                  
                 </nav>
                 <div class="article-desc">
-                  {{ article.desc_txt | cutOutDesc }}
+                  {{ art.desc_txt | cutOutDesc }}
                 </div>
                 <div>
-                  <router-link :to="{name:'detail', params:{id:article.id}}">
+                  <router-link :to="{name:'detail', params:{id:art.id}}">
                     <el-button  class="el-icon-reading"> Continue reading →</el-button>
                   </router-link>
                 </div>
                 <footer class="article-tag">
                   <span class="el-icon-s-flag">
-                      <template v-for="tag in article.tag"> {{tag.name}} </template>
+                      <template v-for="tag in art.tag"> {{tag.name}} </template>
                   </span>
                 </footer>
                 <br>
                 <hr>
               </article>
-
             </template>
           </section>
         </el-col>
@@ -83,6 +90,10 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  #articles {
+    background-color: rgb(241, 241, 241);
+    min-height: 1200px
+  }
   hr {
     border:0;
     background-color: #ebebeb;
@@ -105,6 +116,7 @@
   }
   #body {
     max-width: 1000px;
+    
     border-bottom: 1px;
     margin: 0 auto!important;
     padding-top: 10px;
@@ -116,7 +128,9 @@
   }
   section {
     border-radius: 4px;
-    min-height: 36px;
+    background-color: #fff;
+
+    min-height: 1200px;
   }
   article > div{
     color: #323e4e;
@@ -125,9 +139,13 @@
   nav, footer{
     margin: 10px 0 ;
   }
-  .nav > span, footer > span{
+  footer > span{
     display: inline-block;
     margin-left: 10px;
     font-size: 14px;
+  }
+  nav li {
+    display: inline-block;
+    margin-right: 16px;
   }
 </style>

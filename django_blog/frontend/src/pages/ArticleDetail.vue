@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id='detail'>
     <header>
       <bar></bar>
     </header>
@@ -10,9 +10,15 @@
               <h2>{{article.title}}</h2>
             </header>
             <nav class="article-desc">
-              <span class="el-icon-user">MaoCat</span>
+              <ul>
+                <li>
+                  <span class="el-icon-user">MaoCat</span>
+                </li>
+                <li>
+                  <span class="el-icon-time">{{article.create_time | formatDate}}</span>
+                </li>
+              </ul>
 
-              <span class="el-icon-time">{{article.create_time | formatDate}}</span>
             </nav>
             <div class="article-content" v-html="mark(article.desc)" v-highlight>
             </div>
@@ -37,7 +43,6 @@
     data() {
       return {
         article: {}
-
       }
     },
     components: {
@@ -47,7 +52,13 @@
     created() {
       getArticleById(this.$route.params.id).then((data) => {
         this.article = data
+        
       })
+    },
+    watch:{
+      article(newVal, oldVal){
+      document.title = newVal.title
+      }
     },
     methods:{
       mark(desc) {
@@ -74,19 +85,30 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+ #detail {
+    background-color: rgb(241, 241, 241);
+    min-height: 1200px
+  }
   #body {
     max-width: 1000px;
+    min-height: 1200px;
     border-bottom: 1px;
     margin: 0 auto!important;
     padding-top: 10px;
   }
   article {
+    background-color: #fff;
     padding: 30px 40px;
+    min-height: 1200px; 
   }
   .article-detail > div {
     margin-top: 20px;
   }
   nav {
     margin:15px 0 ;
+  }
+  nav li {
+    display: inline-block;
+    margin-right: 15px;
   }
 </style>

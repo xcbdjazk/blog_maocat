@@ -8,7 +8,7 @@
 
 <script>
     export default {
-        name: "bar",
+      name: "bar",
       data(){
           return {
             scroll:0,
