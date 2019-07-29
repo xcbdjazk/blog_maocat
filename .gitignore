@@ -15,7 +15,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-qiniu_conf.py
+utils/qiniu_conf.py
 lib64/
 parts/
 sdist/
