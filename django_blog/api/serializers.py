@@ -12,3 +12,9 @@ class ArticleSerializerModel(serializers.ModelSerializer):
         fields = "__all__"
         depth = 1
         # fields = ['id', 'title']
+
+
+class UserSerializerModel(serializers.ModelSerializer):
+    class Meta:
+        model = models.Admin
+        fields = "__all__"
