@@ -14,6 +14,12 @@ class ArticleSerializerModel(serializers.ModelSerializer):
         # fields = ['id', 'title']
 
 
+class TagsSerializerModel(serializers.ModelSerializer):
+    class Meta:
+        model = models.Tag
+        fields = "__all__"
+
+
 class UserSerializerModel(serializers.ModelSerializer):
     class Meta:
         model = models.Admin
