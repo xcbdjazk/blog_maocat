@@ -92,7 +92,7 @@
 <style scoped>
   #articles {
     background-color: rgb(241, 241, 241);
-    min-height: 1200px
+    min-height: 100vh;
   }
   hr {
     border:0;

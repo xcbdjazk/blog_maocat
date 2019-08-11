@@ -12,7 +12,7 @@
             <nav class="article-desc">
               <ul>
                 <li>
-                  <span class="el-icon-user">MaoCat</span>
+                  <span class="el-icon-user">MaoCa1t</span>
                 </li>
                 <li>
                   <span class="el-icon-time">{{article.create_time | formatDate}}</span>
@@ -87,11 +87,13 @@
 <style scoped>
  #detail {
     background-color: rgb(241, 241, 241);
-    min-height: 1200px
+   min-height: 80vh;
+
   }
   #body {
     max-width: 1000px;
-    min-height: 1200px;
+    min-height: 100vh;
+
     border-bottom: 1px;
     margin: 0 auto!important;
     padding-top: 10px;
@@ -99,7 +101,8 @@
   article {
     background-color: #fff;
     padding: 30px 40px;
-    min-height: 1200px; 
+    min-height: 80vh;
+
   }
   .article-detail > div {
     margin-top: 20px;
@@ -111,4 +114,6 @@
     display: inline-block;
     margin-right: 15px;
   }
+
+
 </style>

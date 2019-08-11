@@ -1,12 +1,14 @@
 <template>
   <div id="profile">
+    <div class="profile">
     <div class="image">
       <!--偷得自己在码云上的头像 嘻嘻····-->
       <img src="https://avatar.gitee.com/uploads/68/1972268_xcbdja.png!avatar100?1550021108" alt="">
     </div>
     <div class="introduce">
       <span>{{ user.name }}</span>
-      <p v-if="user.desc">{{ user.desc }}啊啊啊</p>
+      <p v-if="user.desc">{{ user.desc }}</p>
+    </div>
     </div>
     <div class="tags">
       <template v-for="tag in tags">
@@ -52,7 +54,7 @@
     text-align: center;
   }
 
-  #profile {
+  .profile {
     background-color: #fff;
   }
   p {
@@ -62,6 +64,8 @@
     margin-top: 20px;
   }
   .tags{
-
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #fff;
   }
 </style>
