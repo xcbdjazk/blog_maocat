@@ -1,5 +1,8 @@
 <template>
   <div id='detail'>
+    <div class="lay-image hidden">
+      <img src="" alt="" width="50%">
+    </div>
     <header>
       <bar></bar>
     </header>
@@ -12,7 +15,7 @@
             <nav class="article-desc">
               <ul>
                 <li>
-                  <span class="el-icon-user">MaoCa1t</span>
+                  <span class="el-icon-user">MaoCat</span>
                 </li>
                 <li>
                   <span class="el-icon-time">{{article.create_time | formatDate}}</span>
@@ -66,6 +69,27 @@
         return converter.makeHtml(desc)
       },
     },
+    mounted(){
+      window.onload=function () {
+        var objs = document.getElementsByTagName("img");
+        var layImg = document.querySelector('.lay-image');
+        var Img = document.querySelector('.lay-image img');
+        layImg.onclick=function () {
+          this.className='lay-image hidden'
+        }
+        for(var i=0;i<objs.length;i++)
+        {
+          objs[i].onclick = function(){
+            layImg.className='lay-image'
+            Img.src=this.src
+
+          }
+
+          objs[i].style.cursor = "pointer";
+        }
+      }
+
+    },
     filters: {
       cutOutDesc(desc) {
         return desc.length > 100 ? desc.substring(0, 100) + '...' : desc
@@ -114,6 +138,23 @@
     display: inline-block;
     margin-right: 15px;
   }
+  .hidden {
+    display: none;
+  }
+  .lay-image{
+    position: fixed;
+    z-index: 99999;
+    background-color: rgba(231, 231, 231, 0.58);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+  }
+  .lay-image img {
+    position: absolute;
+    left: 25vw;
+    top: 50vh;
+    transform: translateY(-50%)
 
-
+  }
 </style>
