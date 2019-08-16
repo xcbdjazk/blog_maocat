@@ -101,8 +101,17 @@
             for(var i=0;i<objs.length;i++)
             {
               objs[i].onclick = function(){
+                let width = 0
                 layImg.className='lay-image'
+                Img.style.width = `${width}%`
                 Img.src=this.src
+                let Intervalid = setInterval(()=>{
+                  width += 5
+                  Img.style.width = `${width}%`
+                  if(width === 50){
+                    clearInterval(Intervalid)
+                  }
+                },20)
 
               }
 
