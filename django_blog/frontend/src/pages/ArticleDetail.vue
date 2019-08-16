@@ -23,7 +23,7 @@
               </ul>
 
             </nav>
-            <div class="article-content" v-html="mark(article.desc)" v-highlight>
+            <div class="article-content" v-html="mark(article.desc)" v-highlight v-imgBig>
             </div>
           </article>
         </el-col>
@@ -60,7 +60,7 @@
     },
     watch:{
       article(newVal, oldVal){
-      document.title = newVal.title
+        document.title = this.article.title
       }
     },
     methods:{
@@ -70,25 +70,6 @@
       },
     },
     mounted(){
-      window.onload=function () {
-        var objs = document.getElementsByTagName("img");
-        var layImg = document.querySelector('.lay-image');
-        var Img = document.querySelector('.lay-image img');
-        layImg.onclick=function () {
-          this.className='lay-image hidden'
-        }
-        for(var i=0;i<objs.length;i++)
-        {
-          objs[i].onclick = function(){
-            layImg.className='lay-image'
-            Img.src=this.src
-
-          }
-
-          objs[i].style.cursor = "pointer";
-        }
-      }
-
     },
     filters: {
       cutOutDesc(desc) {
@@ -96,6 +77,7 @@
       },
       mark(desc) {
         let converter = new showdown.Converter()
+        
         return converter.makeHtml(desc)
       },
       formatDate(datetime) {
@@ -103,6 +85,31 @@
         return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
 
       }
+    },
+    directives:{
+        imgBig:{
+          componentUpdated:(el)=>{
+            var objs = el.querySelectorAll(".article-detail img");
+            var layImg = document.querySelector('.lay-image');
+            console.log(layImg)
+            var Img = document.querySelector('.lay-image img');
+            
+            layImg.onclick=function () {
+              this.className='lay-image hidden'
+            }
+            
+            for(var i=0;i<objs.length;i++)
+            {
+              objs[i].onclick = function(){
+                layImg.className='lay-image'
+                Img.src=this.src
+
+              }
+
+              objs[i].style.cursor = "pointer";
+            }
+        }
+        }
     }
   }
 </script>
@@ -144,7 +151,7 @@
   .lay-image{
     position: fixed;
     z-index: 99999;
-    background-color: rgba(231, 231, 231, 0.58);
+    background-color: rgba(46, 46, 46, 0.61);
     width: 100vw;
     height: 100vh;
     top: 0;

@@ -130,7 +130,7 @@
     border-radius: 4px;
     background-color: #fff;
 
-    min-height: 1200px;
+    min-height: 80vh;
   }
   article > div{
     color: #323e4e;
