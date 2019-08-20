@@ -105,13 +105,25 @@
                 layImg.className='lay-image'
                 Img.style.width = `${width}%`
                 Img.src=this.src
-                let Intervalid = setInterval(()=>{
+                if(window.innerWidth > 700){
+                  let Intervalid = setInterval(()=>{
                   width += 5
                   Img.style.width = `${width}%`
                   if(width === 50){
                     clearInterval(Intervalid)
                   }
                 },20)
+                }else{
+                  Img.style.left = 0
+                  let Intervalid = setInterval(()=>{
+                  width += 5
+                  Img.style.width = `${width}%`
+                  if(width === 100){
+                    clearInterval(Intervalid)
+                  }
+                },10)
+                }
+                
 
               }
 
