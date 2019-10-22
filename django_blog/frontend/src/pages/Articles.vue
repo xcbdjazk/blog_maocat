@@ -1,5 +1,8 @@
 <template>
   <div id="articles">
+    <div>
+
+    </div>
     <header>
       <bar></bar>
     </header>
@@ -24,10 +27,7 @@
                     <li>
                       <span class="el-icon-time">{{art.create_time | formatDate}}</span>
                     </li>
-                  </ul>  
-                  
-
-                  
+                  </ul>
                 </nav>
                 <div class="article-desc">
                   {{ art.desc_txt | cutOutDesc }}
@@ -77,6 +77,8 @@
     },
     filters:{
       cutOutDesc(desc){
+        let reg = new RegExp("https?.+");
+        desc = desc.replace(reg, '')
         return desc.length > 100?desc.substring(0, 100) + '...': desc
       },
       formatDate(datetime){
@@ -116,7 +118,7 @@
   }
   #body {
     max-width: 1000px;
-    
+
     border-bottom: 1px;
     margin: 0 auto!important;
     padding-top: 10px;

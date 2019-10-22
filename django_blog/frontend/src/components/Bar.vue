@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="progress-bar" id="bar" style="height: 2px;background-color: #000;position: fixed;z-index: 1999">
+    <div class="progress-bar" id="bar" style="">
     </div>
 
   </div>
@@ -80,5 +80,11 @@
 </script>
 
 <style scoped>
-
+.progress-bar{
+  height: 2px;
+  background-color: #000;
+  position: fixed;
+  top:0;
+  z-index: 1999
+}
 </style>
