@@ -11,7 +11,7 @@ class Article(Model):
     title = models.CharField(max_length=128)
     desc = models.CharField(max_length=4096)
     desc_txt = models.CharField(max_length=4096, null=True)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     tag = models.ManyToManyField("Tag")
 
     @property

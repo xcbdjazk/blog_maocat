@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+
 config_name = os.getenv('DJANGO_CONFIG')
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +29,6 @@ SECRET_KEY = '3kc-o8#j@62)6(mcpj^=2x(8$ie#8voa8l%g#l0_f0*bn4_(4='
 
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -96,7 +96,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'backend.helps.global_params' # 添加全局变量
+                'backend.helps.global_params'  # 添加全局变量
             ],
         },
     },
@@ -104,21 +104,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_blog.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-     'default':{
-        'ENGINE':'django.db.backends.postgresql_psycopg2',
-        'NAME':'blog',#数据库名字
-        'USER':'maocat',#登录用户名
-        'PASSWORD':'123456',
-        'HOST':'postgres',#数据库IP地址
-        'PORT':'5432',
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'blog',  # 数据库名字
+        'USER': 'maocat',  # 登录用户名
+        'PASSWORD': '123456',
+        'HOST': 'postgres',  # 数据库IP地址
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -138,7 +136,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -153,7 +150,6 @@ USE_L10N = True
 # default
 # USE_TZ = True
 USE_TZ = False
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

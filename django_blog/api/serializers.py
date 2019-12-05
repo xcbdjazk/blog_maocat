@@ -1,9 +1,10 @@
+
 from rest_framework import serializers
 from backend import models
 
 
-class ArticleSerializer(serializers.Serializer):
-    title = serializers.CharField()
+# class ArticleSerializer(serializers.Serializer):
+#     title = serializers.CharField()
 
 
 class ArticleSerializerModel(serializers.ModelSerializer):
