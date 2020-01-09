@@ -12,7 +12,6 @@ from .helps.pagination import ArticlePagination
 class ArticleInfo(APIView):
 
     def get(self, req, *args, **kwargs):
-        print(req.query_params)
         tag = req.query_params.get("tag")
         query = {}
         if tag:
