@@ -10,7 +10,7 @@ import 'element-ui/lib/theme-chalk/display.css';
 Vue.use(ElementUI)
 /* eslint-disable no-new */
 import hljs from 'highlight.js'
-import 'highlight.js/styles/github.css'
+import 'highlight.js/styles/monokai-sublime.css'
 Vue.directive('highlight', (el) => {
   let blocks = el.querySelectorAll('pre code')
   blocks.forEach((block) => {
