@@ -12,8 +12,12 @@ from .helps.pagination import ArticlePagination
 class ArticleInfo(APIView):
 
     def get(self, req, *args, **kwargs):
-
-        acts = models.Article.objects.filter(is_active=True).order_by('-create_time').all()
+        print(req.query_params)
+        tag = req.query_params.get("tag")
+        query = {}
+        if tag:
+            query['tag'] = models.Tag.objects.filter(name=tag).first()
+        acts = models.Article.objects.filter(is_active=True,**query).order_by('-create_time').all()
         pg = ArticlePagination()
         acts_pag = pg.paginate_queryset(queryset=acts,request=req,view=self)
         asr = ArticleSerializerModel(instance=acts_pag, many=True)

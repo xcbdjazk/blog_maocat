@@ -38,7 +38,7 @@
                   </router-link>
                 </div>
                 <footer class="article-tag">
-                  <span class="el-icon-s-flag">
+                  <span class="el-icon-collection-tag">
                       <template v-for="tag in art.tag"> {{tag.name}} </template>
                   </span>
                 </footer>
@@ -63,18 +63,37 @@
     name: 'Articles',
     data() {
       return {
-        articles: []
+        articles: [],
+        page:1,
+        has_data:true,
+        scroll:0,
+        tag:''
       }
     },
+
+      watch:{
+          '$route':function () {
+              this.has_data=true
+              this.articles=[]
+              this.page=1
+              this.get_data(this.page)
+          }
+      },
     components:{
       bar:Bar,
       profile:Profile
     },
-    created() {
-      getArticles().then((data) => {
-        this.articles = data
-      })
-    },
+      mounted() {
+          this.get_data()
+          let _t = this
+          window.onscroll = function(){
+              if(_t.getScrollTop() + _t.getWindowHeight() == _t.getScrollHeight()){
+                  _t.get_data(_t.page)
+              }
+          };
+
+
+      },
     filters:{
       cutOutDesc(desc){
         let reg = new RegExp("https?.+");
@@ -86,7 +105,59 @@
         return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
 
       }
-    }
+    },
+      methods:{
+          //滚动条在Y轴上的滚动距离
+    get_data(page){
+        this.tag = this.$route.params.tag
+        console.log( this.tag)
+        if (this.has_data){
+            getArticles( this.tag,page).then((data) => {
+                this.articles = this.articles.concat(data)
+                this.page +=1
+                if(data.length < 10){
+                    this.has_data = false
+                }
+            })
+        }
+
+    },
+    getScrollTop(){
+      var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+      if(document.body){
+          bodyScrollTop = document.body.scrollTop;
+      }
+      if(document.documentElement){
+          documentScrollTop = document.documentElement.scrollTop;
+      }
+      scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+      return scrollTop;
+  },
+
+  //文档的总高度
+
+  getScrollHeight(){
+      var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+      if(document.body){
+          bodyScrollHeight = document.body.scrollHeight;
+      }
+      if(document.documentElement){
+          documentScrollHeight = document.documentElement.scrollHeight;
+      }
+      scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+      return scrollHeight;
+  },
+  //浏览器视口的高度
+  getWindowHeight(){
+      var windowHeight = 0;
+      if(document.compatMode == "CSS1Compat"){
+          windowHeight = document.documentElement.clientHeight;
+      }else{
+          windowHeight = document.body.clientHeight;
+      }
+      return windowHeight;
+  }
+      }
   }
 </script>
 

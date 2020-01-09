@@ -24,4 +24,5 @@ class TagsSerializerModel(serializers.ModelSerializer):
 class UserSerializerModel(serializers.ModelSerializer):
     class Meta:
         model = models.Admin
-        fields = "__all__"
+        exclude = ('password_hash',)
+

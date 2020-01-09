@@ -8,7 +8,9 @@ Vue.use(Router)
 let router = new VueRouter(
   {
     routes:[{path : "/" ,name:'base', component:Articles, meta:{title:'blog in maocat'}},
-      {path : "/:id" ,name:'detail', component:ArticleDetail, meta:{title:'blog in maocat'}},]
+      {path : "/:id" ,name:'detail', component:ArticleDetail, meta:{title:'blog in maocat'}},
+      {path : "/tag/:tag" ,name:'tag', component:Articles, meta:{title:'blog in maocat'}},
+    ]
 }
 
 )

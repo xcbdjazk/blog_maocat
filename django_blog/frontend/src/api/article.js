@@ -1,8 +1,14 @@
 import request from '../utils/request'
 
 
-function getArticles(){
-  return request.get('/articles/')
+function getArticles(tag,page=1){
+  return request.get('/articles/',{
+    params: {
+      'size': 10,
+      tag,
+     page
+    }
+  })
 }
 
 function getArticleById(id){
