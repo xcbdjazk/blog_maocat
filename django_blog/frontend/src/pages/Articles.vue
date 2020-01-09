@@ -52,12 +52,14 @@
             <profile></profile>
         </el-col>
       </el-row>
+    <goback></goback>
     </div>
 </template>
 
 <script >
   import {getArticles} from '../api/article'
   import Bar from '../components/Bar'
+  import GoBack from '../components/GoBack'
   import Profile from '../components/Profile'
   export default {
     name: 'Articles',
@@ -81,7 +83,8 @@
       },
     components:{
       bar:Bar,
-      profile:Profile
+      profile:Profile,
+      goback:GoBack
     },
       mounted() {
           this.get_data()

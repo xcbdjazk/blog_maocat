@@ -24,7 +24,6 @@
 <script>
   import {getUserProfile} from '../api/user'
   import {getTags} from '../api/tag'
-
   export default {
 
     name: "profile",
