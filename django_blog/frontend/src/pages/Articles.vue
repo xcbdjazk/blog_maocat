@@ -112,12 +112,11 @@
       methods:{
           //滚动条在Y轴上的滚动距离
     get_data(page){
+        this.page +=1
         this.tag = this.$route.params.tag
-        console.log( this.tag)
         if (this.has_data){
-            getArticles( this.tag,page).then((data) => {
+            getArticles( this.tag, page).then((data) => {
                 this.articles = this.articles.concat(data)
-                this.page +=1
                 if(data.length < 10){
                     this.has_data = false
                 }

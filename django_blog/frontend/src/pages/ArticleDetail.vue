@@ -31,6 +31,7 @@
             <profile></profile>
         </el-col>
       </el-row>
+    <goback></goback>
   </div>
 </template>
 
@@ -40,6 +41,7 @@
   import {getArticleById} from '../api/article'
   import Bar from '../components/Bar'
   import Profile from '../components/Profile'
+  import GoBack from '../components/GoBack'
 
   export default {
     name: 'Articles',
@@ -51,11 +53,12 @@
     components: {
       bar: Bar,
       profile: Profile,
+      goback: GoBack,
     },
     created() {
       getArticleById(this.$route.params.id).then((data) => {
         this.article = data
-        
+
       })
     },
     watch:{
@@ -77,7 +80,7 @@
       },
       mark(desc) {
         let converter = new showdown.Converter()
-        
+
         return converter.makeHtml(desc)
       },
       formatDate(datetime) {
@@ -91,13 +94,12 @@
           componentUpdated:(el)=>{
             var objs = el.querySelectorAll(".article-detail img");
             var layImg = document.querySelector('.lay-image');
-            console.log(layImg)
             var Img = document.querySelector('.lay-image img');
-            
+
             layImg.onclick=function () {
               this.className='lay-image hidden'
             }
-            
+
             for(var i=0;i<objs.length;i++)
             {
               objs[i].onclick = function(){
@@ -123,7 +125,7 @@
                   }
                 },10)
                 }
-                
+
 
               }
 
