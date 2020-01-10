@@ -31,7 +31,7 @@
             <profile></profile>
         </el-col>
       </el-row>
-    <goback></goback>
+      <goback></goback>
   </div>
 </template>
 

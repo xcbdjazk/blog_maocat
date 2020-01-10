@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="el-icon-s-home home" @click="home()"></div>
-    <div class="top el-icon-top" @click="backTop()"></div>
+    <div class="el-icon-s-home home" @click="home()" v-imgRight></div>
+    <div class="top el-icon-top" @click="backTop()" v-imgRight></div>
   </div>
 </template>
 
@@ -49,7 +49,17 @@
                 }
                 this.scrollTop = now_top
 
-        }}
+        }},
+
+        directives:{
+        imgRight:{
+            bind(el){
+                if(window.innerWidth < 700){
+                    el.style.right = "10%"
+                }
+            }
+        }
+    }
 
     }
 </script>
