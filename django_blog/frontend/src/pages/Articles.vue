@@ -75,6 +75,8 @@
 
       watch:{
           '$route':function () {
+              let tag = this.$route.params.tag
+              document.title = tag?"search tag: "+tag:"MaoCat"
               this.has_data=true
               this.articles=[]
               this.page=1
@@ -87,6 +89,7 @@
       goback:GoBack
     },
       mounted() {
+          document.title = this.tag?this.tag:"MaoCat"
           this.get_data()
           let _t = this
           window.onscroll = function(){
