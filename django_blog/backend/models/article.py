@@ -9,8 +9,8 @@ class Article(Model):
         db_table = "article"
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=128)
-    desc = models.CharField(max_length=4096)
-    desc_txt = models.CharField(max_length=4096, null=True)
+    desc = models.CharField(max_length=4096*4)
+    desc_txt = models.CharField(max_length=4096*4, null=True)
     is_active = models.BooleanField(default=False)
     tag = models.ManyToManyField("Tag")
 
