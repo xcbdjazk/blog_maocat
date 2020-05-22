@@ -39,3 +39,12 @@ class Tag(Model):
 
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=32)
+
+
+class ImagesModel(Model):
+    class Meta:
+        db_table = "images"
+
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=32)
+    url = models.URLField(max_length=128*4)

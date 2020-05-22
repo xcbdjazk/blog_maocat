@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load static_tag %}
+{% block head %}
+    <title>add images</title>
+    <style>
+        .row > li {
+            display: inline-block;
+            width: 30px;
+            line-height: 30px;
+            background-color: rgba(200, 255, 163, 0.24);
+        }
+
+        .row > li:hover {
+            background-color: rgba(255, 134, 143, 0.24);
+        }
+
+        .article-form {
+            margin-top: 20px;
+        }
+
+        .upload_file {
+            display: inline-block;
+            position: relative;
+        }
+
+        .upload_file img {
+            border: 1px solid rgba(0, 0, 0, 0.17);
+            box-shadow:1px 2px 2px 2px rgba(0, 0, 0, 0.17);
+            border-radius: 5px;
+            padding: 5px;
+            width: 100px;
+            height: 100px;
+            margin-left: 30px;
+        }
+
+        .upload_file input[type='file'], .delete_file {
+            position: absolute;
+            top: 0;
+
+        }
+        .upload_file input[type='file']{
+            left: 30px;
+            width: 100px;
+            height: 100px;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .delete_file{
+            background-color: #ebebeb;
+            display: none;
+            right: 0;
+            cursor: pointer;
+        }
+        .upload_file:hover .delete_file{
+            display: block;
+
+        }
+    </style>
+{% endblock %}
+{% block body %}
+  <div class="row">
+        <ul>
+            <li class="col-xs-2 text-center"><a href="{% url 'index' %}"> go back </a></li>
+            <li class="col-xs-2 text-center"><a href="{% url 'article_index' %}"> add article</a></li>
+            <li class="col-xs-2 text-center"><a class="layer-pop" href="{% url 'edit_user' %}"> edit user </a></li>
+            <li class="col-xs-2 text-center"><a href="{% url 'add_images' %}"> add images </a></li>
+            <li class="col-xs-2 text-center"><a href="javascript:void (0)"> do some thing </a></li>
+        </ul>
+    </div>
+    <div class="form-group file_image">
+        <label for="file">上传图片</label>
+        {% for foo in images%}
+        <div class="upload_file">
+            <img src="{{ foo.url }}" alt="">
+            <span class="glyphicon glyphicon-trash delete_file"></span>
+        </div>
+        {% endfor %}
+
+        <div class="upload_file click_upload">
+            <img src="{%  url_for 'images/up.png' %}" alt="">
+            <input type="file" name="file" id="file" placeholder="上传图片" multiple="multiple">
+        </div>
+    </div>
+    <div class="copy-image" style="display: none">
+        <div class="upload_file">
+            <img src="{%  url_for 'images/up.png' %}" alt="">
+            <span class="glyphicon glyphicon-trash delete_file"></span>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+     <script src="{% url_for 'jquery-file-upload/js/jquery.ui.widget.js' %}"></script>
+     <script src="{% url_for 'jquery-file-upload/js/jquery.ui.widget.js' %}"></script>
+     <script src="{% url_for 'jquery-file-upload/js/jquery.iframe-transport.js' %}"></script>
+     <script src="{% url_for 'jquery-file-upload/js/jquery.fileupload.js'%}"></script>
+    <script>
+        $('.delete_file').click(function () {
+            $(this).parent().remove()
+        })
+        $('#file').fileupload({
+                url: '{% url 'add_images' %}',
+                dataType: 'json',
+                singleFileUploads: false,
+                done: function (e, data) {
+                    console.log(data.result)
+                    parent.layer.close(upload_layer);
+                    let data_src = data.result.data.urls
+                    for(let i in data_src){
+                        let image_src = data_src[i]
+                        let copy_image = $('.copy-image .upload_file').clone(true)
+                        copy_image.children('img').attr('src', image_src)
+                        $('.click_upload').prev().after(copy_image)
+                    }
+
+                },
+                add: function (e, data) {
+                    upload_layer = parent.layer.msg('正在上传，请稍后...', {
+                        icon: 16,
+                        shade: 0.1,
+                        time: 999999
+                    });
+                    let files = data.files
+                    for(let i in files){
+                        if (!/.(gif|jpg|jpeg|png|gif|jpg|png)$/.test(files[i].name)){
+                            parent.layer.close(upload_layer);
+                            parent.layer.msg('请上传正确文件格式的图片', {
+                                icon: 2,
+                                shade: 0.1,
+                            })
+                            return
+                        }
+                    }
+
+                    data.submit();
+                }
+            })
+    </script>
+{% endblock %}

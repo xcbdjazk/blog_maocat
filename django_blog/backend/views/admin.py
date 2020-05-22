@@ -1,4 +1,4 @@
-    # -*-  coding:utf-8 -*-
+# -*-  coding:utf-8 -*-
 from django.shortcuts import render
 from django.shortcuts import redirect
 from ..helps import rest
@@ -7,6 +7,7 @@ from ..models.admin import Admin
 from ..models.article import Article
 from utils.login_manage import login_require
 from utils.redis_session import REDIS_CLIENT
+
 
 @require_http_methods(["GET", 'POST'])
 # @login_require

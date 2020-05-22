@@ -16,5 +16,6 @@ urlpatterns = [
     path(r'tag/edit/<id>', article.tag_edit, name="tag_edit"),
     path(r'tag/tag_ajax', article.tag_ajax, name="tag_ajax"),
     path(r'edit/user', user.edit_user, name="edit_user"),
+    path(r'add/images', user.add_images, name="add_images"),
     path(r'upload', upload.upload, name="upload"),
 ]

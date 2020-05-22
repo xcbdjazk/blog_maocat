@@ -26,3 +26,8 @@ class UserSerializerModel(serializers.ModelSerializer):
         model = models.Admin
         exclude = ('password_hash',)
 
+
+class ImagesSerializerModel(serializers.ModelSerializer):
+    class Meta:
+        model = models.ImagesModel
+        fields = "__all__"
