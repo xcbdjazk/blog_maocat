@@ -73,7 +73,7 @@
         {% for foo in images%}
         <div class="upload_file">
             <img src="{{ foo.url }}" alt="">
-            <span class="glyphicon glyphicon-trash delete_file"></span>
+            <span class="glyphicon glyphicon-trash delete_file" uid="{{ foo.id }}"></span>
         </div>
         {% endfor %}
 
@@ -97,7 +97,14 @@
      <script src="{% url_for 'jquery-file-upload/js/jquery.fileupload.js'%}"></script>
     <script>
         $('.delete_file').click(function () {
+            let uid = $(this).attr('uid')
             $(this).parent().remove()
+            $.post({url: '{% url 'add_images' %}',
+                    data:{uid,action:'delete_image'},
+                    success(){
+
+                    }
+            })
         })
         $('#file').fileupload({
                 url: '{% url 'add_images' %}',
@@ -108,9 +115,11 @@
                     parent.layer.close(upload_layer);
                     let data_src = data.result.data.urls
                     for(let i in data_src){
-                        let image_src = data_src[i]
+                        let image_src = data_src[i].url
+                        let uid = data_src[i].id
                         let copy_image = $('.copy-image .upload_file').clone(true)
                         copy_image.children('img').attr('src', image_src)
+                        copy_image.children('span').attr('uid', uid)
                         $('.click_upload').prev().after(copy_image)
                     }
 

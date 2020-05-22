@@ -48,8 +48,10 @@ def _random_filename(rawfilename):
 @csrf_exempt
 def add_images(request):
     if request.method == 'POST':
-        result = {}
-
+        if request.POST.get('action') == 'delete_image':
+            img = ImagesModel.objects.get(id=request.POST.get('uid'))
+            img.delete()
+            return rest.success()
         images = request.FILES.getlist('file')
         urls = []
         for image in images:
@@ -61,18 +63,19 @@ def add_images(request):
                 ret, info = qiniu.put_data(token, save_filename, image.read())
                 if info.ok:
                     url = parse.urljoin(Config.BUCKET_CONF['upload']['url'], ret['key'])
-                    urls.append(url)
+
                     img = ImagesModel()
                     img.url = url
                     img.save()
+                    urls.append({"id": img.id,"url":url})
             else:
                 img_path = default_storage.save(
                     os.path.join(settings.BASE_DIR, 'backend', 'static', 'ueditor_image', save_filename), image)
                 url = 'http://' + request.get_host() + '/static/ueditor_image/' + save_filename
-                urls.append(url)
                 img = ImagesModel()
                 img.url = url
                 img.save()
+                urls.append({"id": img.id, "url": url})
         return rest.success('添加成功', data={"urls": urls})
 
     images = ImagesModel.objects.all()
