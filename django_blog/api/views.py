@@ -1,11 +1,10 @@
+import random
 from rest_framework.views import APIView
 from backend import models
-# from .serializers import ArticleSerializer
 from .serializers import ArticleSerializerModel
 from .serializers import UserSerializerModel
 from .serializers import TagsSerializerModel
 from .serializers import ImagesSerializerModel
-import json
 from django.http import JsonResponse
 from .helps.pagination import ArticlePagination
 
@@ -55,7 +54,6 @@ class Images(APIView):
     def get(self, req, *args, **kwargs):
         images = models.ImagesModel.objects.filter().all()
         images = list(images)
-        import random
         random.shuffle(images)
-        asr = ImagesSerializerModel(instance=set(images), many=True)
+        asr = ImagesSerializerModel(instance=images, many=True)
         return JsonResponse(asr.data, safe=False)
