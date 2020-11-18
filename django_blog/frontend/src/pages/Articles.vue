@@ -93,7 +93,7 @@
           this.get_data()
           let _t = this
           window.onscroll = function(){
-              if(_t.getScrollTop() + _t.getWindowHeight() == _t.getScrollHeight()){
+              if(_t.getScrollTop() + _t.getWindowHeight() >= _t.getScrollHeight() - 30){
                   _t.get_data(_t.page)
               }
           };
@@ -203,6 +203,7 @@
     margin: 20px 0;
     color: #323e4e;
     font-family: sans-serif;
+    word-wrap:break-word;
   }
   section {
     border-radius: 4px;

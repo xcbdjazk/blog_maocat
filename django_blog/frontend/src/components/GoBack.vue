@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="el-icon-s-home home" @click="home()" v-imgRight></div>
-    <div class="top el-icon-top" @click="backTop()" v-imgRight></div>
+    <div class="el-icon-s-home home" @click="home()" v-imgRight v-show="this.$route.path !== '/'"></div>
+    <div class="top el-icon-top" @click="backTop()" v-imgRight v-show="scrollTop!==0"></div>
   </div>
 </template>
 
@@ -16,6 +16,7 @@
             }
         },
         mounted () {
+
             window.addEventListener('scroll', this.scrollToTop)
         },
         destroyed () {
@@ -56,6 +57,7 @@
             bind(el){
                 if(window.innerWidth < 700){
                     el.style.right = "10%"
+                    el.style.fontSize = "20px"
                 }
             }
         }
@@ -66,21 +68,25 @@
 
 <style scoped>
   .home,.top{
-    width: 35px;
+    width: 20px;
     height: 35px;
     position:fixed;
     line-height: 35px;
     right:30%;
     text-align: center;
     font-size: 30px;
-    background-color: #fdfdfd;
     border-radius: 50%;
-    cursor:pointer
+    cursor:pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0)
   }
   .home {
-    bottom: 100px;
+    bottom: 30px;
   }
   .top {
-    bottom: 150px;
+    bottom: 60px;
   }
 </style>

@@ -3,8 +3,8 @@
 const DJANGO_CONFIG_ENV = process.env.DJANGO_CONFIG
 
 var DEVELOP_CONFIG = {
-  API_HOST: '"http://127.0.0.1:8000/api"',
-  // API_HOST: '"http://maocatooo.cn/api"',
+  // API_HOST: '"http://127.0.0.1:8000/api"',
+  API_HOST: '"https://maocatooo.cn/api"',
   STATIC_HOST: '/'
 }
 var DJ_CONFIG = {
